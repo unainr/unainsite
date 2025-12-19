@@ -51,6 +51,15 @@ export default function MainHeader() {
 						About
 					</Link>
 					<Link
+						href="/services"
+						className={cn(
+							"text-sm font-medium transition-colors ",
+							isActive("/services") &&
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+						)}>
+						Services
+					</Link>
+					<Link
 						href="/project"
 						className={cn(
 							"text-sm font-medium transition-colors ",

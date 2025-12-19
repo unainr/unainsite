@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GodRays, MeshGradient } from "@paper-design/shaders-react";
 import { FlipWords } from "./flip-text";
 import { words } from "@/constants";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Hero() {
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -79,7 +81,7 @@ export default function Hero() {
 						transition={{ duration: 0.6 }}
 						className="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 px-3 py-1 text-sm font-medium text-zinc-800 dark:text-zinc-200 backdrop-blur-sm">
 						<span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2"></span>
-						New: Q3 Enterprise Report
+						Full-Stack Developer & AI Specialist
 					</motion.div>
 
 					<motion.h1
@@ -108,19 +110,16 @@ export default function Hero() {
 									style={{ borderRadius: "100px" }}
 									layout
 									layoutId="cta-card"
-									className="absolute inset-0 bg-blue-600 dark:bg-blue-600"
+									className="absolute inset-0 bg-linear-to-r from-blue-500 to-cyan-500"
 								/>
-								<motion.button
-									initial={{ opacity: 0, scale: 0.9 }}
-									animate={{ opacity: 1, scale: 1 }}
-									transition={{ delay: 0.2 }}
-									exit={{ opacity: 0, scale: 0.8 }}
-									layout={false}
-									onClick={handleExpand}
-									className="relative flex items-center gap-2 h-14 px-8 py-3 text-lg font-medium text-white tracking-wide hover:opacity-90 transition-opacity">
+								<Link href={'/project'}>
+								<Button
+									
+									className="relative rounded-full flex items-center gap-2 h-14 px-8 py-3 text-lg font-medium text-white tracking-wide hover:opacity-90 transition-opacity">
 									Explore My Projects
 									<ArrowRight className="w-5 h-5" />
-								</motion.button>
+								</Button>
+										</Link>
 							</motion.div>
 						)}
 					</AnimatePresence>
