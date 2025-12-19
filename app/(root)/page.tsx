@@ -1,4 +1,4 @@
-import { HomeView } from '@/modules/home/view/home-view'
+import { HomeView } from '@/modules/home/ui/view/home-view'
 const Home = () => {
   return (
     <><HomeView/></>
@@ -6,3 +6,5 @@ const Home = () => {
 }
 
 export default Home
+
+export const revalidate = 60;
