@@ -1,8 +1,12 @@
+import MainHeader from '@/components/layouts/header'
 import { PropsLayout } from '@/types'
 
 const Layout = ({children}: PropsLayout) => {
   return (
-    <>{children}</>
+    <>
+    <MainHeader/>
+    {children}
+    </>
   )
 }
 

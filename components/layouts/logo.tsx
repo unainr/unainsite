@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <Link href="/" className="flex items-center gap-2">
       <Image
-        src="/logo.png" // or your public path
+        src="/logo2.png" // or your public path
         alt="UNAIN Logo"
         width={130}
         height={50}

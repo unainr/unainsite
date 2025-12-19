@@ -1,92 +1,135 @@
-'use client'
-import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import Logo from './logo'
+"use client";
 
-const menuItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Project', href: '/project' },
-    { name: 'Contact', href: '/contact' },
-]
+import * as React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { ModeToggle } from "../theme/mode-toggle";
+import Logo from "./logo";
 
-export const HeroHeader = () => {
-    const [menuState, setMenuState] = React.useState(false)
-    return (
-        <header>
-            <nav
-                data-state={menuState && 'active'}
-                className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl">
-                <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
-                    <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
-                        <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
-                            <Link
-                                href="/"
-                                aria-label="home"
-                                className="flex items-center space-x-2">
-                                <Logo />
-                            </Link>
+export default function MainHeader() {
+	const [isScrolled, setIsScrolled] = React.useState(false);
+	const pathname = usePathname();
+	const isActive = (path: string) => pathname === path;
+	React.useEffect(() => {
+		const handleScroll = () => {
+			setIsScrolled(window.scrollY > 0);
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
 
-                            <button
-                                onClick={() => setMenuState(!menuState)}
-                                aria-label={menuState == true ? 'Close Menu' : 'Open Menu'}
-                                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden">
-                                <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                                <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
-                            </button>
+	return (
+		<header
+			className={`fixed top-0 z-50 w-full transition-all duration-200 ${
+				isScrolled ? "bg-background/60 backdrop-blur-md" : ""
+			}`}>
+			<div className="mx-auto max-w-7xl flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+				<Logo />
 
-                            <div className="hidden lg:block">
-                                <ul className="flex gap-8 text-sm">
-                                    {menuItems.map((item, index) => (
-                                        <li key={index}>
-                                            <Link
-                                                href={item.href}
-                                                className="text-muted-foreground hover:text-accent-foreground block duration-150">
-                                                <span>{item.name}</span>
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
+				<nav className="hidden  md:flex items-center gap-4 lg:gap-6">
+					<Link
+						href="/"
+						className={cn(
+							"text-sm font-medium transition-colors ",
+							isActive("/") &&
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+						)}>
+						Home
+					</Link>
 
-                        <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-                            <div className="lg:hidden">
-                                <ul className="space-y-6 text-base">
-                                    {menuItems.map((item, index) => (
-                                        <li key={index}>
-                                            <Link
-                                                href={item.href}
-                                                className="text-muted-foreground hover:text-accent-foreground block duration-150">
-                                                <span>{item.name}</span>
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                <Button
-                                    asChild
-                                    variant="outline"
-                                    size="sm">
-                                    <Link href="#">
-                                        <span>Login</span>
-                                    </Link>
-                                </Button>
-                                <Button
-                                    asChild
-                                    size="sm">
-                                    <Link href="#">
-                                        <span>Sign Up</span>
-                                    </Link>
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
-    )
+					<Link
+						href="/about"
+						className={cn(
+							"text-sm font-medium transition-colors ",
+							isActive("/about") &&
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+						)}>
+						About
+					</Link>
+					<Link
+						href="/project"
+						className={cn(
+							"text-sm font-medium transition-colors ",
+							isActive("/project") &&
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+						)}>
+						Projects
+					</Link>
+					<Link
+						href="/contact"
+						className={cn(
+							"text-sm font-medium transition-colors ",
+							isActive("/contact") &&
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+						)}>
+						Contact
+					</Link>
+					
+				</nav>
+
+				<div className="hidden md:flex items-center gap-2">
+					
+				<ModeToggle/>
+
+				</div>
+
+				{/* Mobile Menu Trigger */}
+				<div className="md:hidden flex items-center">
+					<Sheet>
+						<SheetTrigger asChild>
+							<Button variant="ghost" size="icon">
+								<Menu className="h-6 w-6" />
+							</Button>
+						</SheetTrigger>
+						<SheetContent side="right" className="w-[250px] sm:w-[300px]">
+							<nav className="flex flex-col gap-4 mt-8 items-center">
+								<Link
+									href="/"
+									className={cn(
+										"text-sm font-medium transition-colors ",
+										isActive("/") &&
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+									)}>
+									Home
+								</Link>
+								<Link
+									href="/about"
+									className={cn(
+										"text-sm font-medium transition-colors ",
+										isActive("/about") &&
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+									)}>
+									About
+								</Link>
+								<Link
+									href="/project"
+									className={cn(
+										"text-sm font-medium transition-colors ",
+										isActive("/project") &&
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+									)}>
+									Projects
+								</Link>
+								<Link
+									href="/contact"
+									className={cn(
+										"text-sm font-medium transition-colors ",
+										isActive("/contact") &&
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+									)}>
+									Contact
+								</Link>
+				<ModeToggle/>
+								
+							</nav>
+						</SheetContent>
+					</Sheet>
+				</div>
+			</div>
+		</header>
+	);
 }
