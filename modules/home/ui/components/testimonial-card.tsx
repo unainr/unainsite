@@ -140,7 +140,7 @@ const randomRotate = () => `${(Math.floor(Math.random() * 16) - 8)}deg`;
 							transition={{ duration: 0.3, ease: "easeInOut" }}
 							className="flex flex-col justify-between">
 							<div>
-								<h3 className="text-2xl font-bold text-rose-600 ">
+								<h3 className="text-2xl font-bold text-blue-400 ">
 									{testimonials[active].name}
 								</h3>
 								<p className="text-sm text-slate-600 dark:text-slate-400 italic ">

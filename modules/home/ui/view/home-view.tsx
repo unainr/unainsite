@@ -2,10 +2,10 @@ import CardProductDemo from "@/components/cards/card-studio";
 import Hero from "../components/hero-section";
 import { ProjectWrapper } from "../components/project-wrapper";
 import TextScrollSlide from "../components/text-scroll-slide";
-import Features from "../components/features";
 import TechStackIcons from "../components/teach-icons";
 import FeaturesCards from "../components/features-card";
 import { TopProject } from "../components/testimonial-card";
+import Features from "../components/features";
 
 export const HomeView = () => {
 	return (
@@ -16,11 +16,11 @@ export const HomeView = () => {
 			<div className="my-16">
 				<TextScrollSlide />
 			</div>
-      <Features/>
-      <div className="text-center mb-16">
+			<Features />
+			<div className="text-center mb-16">
 				<div className="my-4 text-5xl font-bold">
 					Featured{" "}
-					<span className="bg-clip-text text-transparent  bg-linear-to-r from-blue-500 to-blue-400">
+					<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
 						Projects
 					</span>
 				</div>
@@ -31,11 +31,9 @@ export const HomeView = () => {
 				</p>
 			</div>
 			<ProjectWrapper count={3} startCount={0} />
-      <FeaturesCards/>
+			<FeaturesCards />
 			<TechStackIcons />
-				<TopProject />
-      
-
+			<TopProject />
 		</>
 	);
 };
