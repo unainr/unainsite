@@ -119,7 +119,7 @@ export default function JourneySection() {
 									<div
 										className={`absolute inset-0 bg-linear-to-br ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-sm`}
 									/>
-									<div className="absolute inset-[2px] bg-white dark:bg-zinc-900/50 rounded-2xl -z-10" />
+									<div className="absolute inset-0.5 bg-white dark:bg-zinc-900/50 rounded-2xl -z-10" />
 
 									{/* Decorative glow */}
 									<div

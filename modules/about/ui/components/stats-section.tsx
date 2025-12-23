@@ -90,11 +90,10 @@ export default function StatsSection() {
 					</p>
 				</motion.div>
 
-				<div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-16">
+				<div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 mb-16">
 					<StatItem end={30} label="Projects Completed" suffix="+" />
-					<StatItem end={15} label="Technologies Mastered" suffix="+" />
 					<StatItem end={100} label="Client Satisfaction" suffix="%" />
-					<StatItem end={4} label="Years Experience" suffix="+" />
+					<StatItem end={3} label="Years Experience" suffix="+" />
 				</div>
 
 				{/* Enhanced highlights with icons */}
