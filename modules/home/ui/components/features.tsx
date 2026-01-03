@@ -7,9 +7,9 @@ export default  function Features() {
 		<section className="py-16 md:py-32">
 			<div className="@container mx-auto max-w-5xl px-6">
 				<div className="text-center">
-					<div className="my-4 text-5xl font-bold" >
+					<div className="my-4 text-5xl tracking-tighter uppercase font-bold" >
 						AI Features That{" "}
-						<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-blue-400">
+						<span className=" italic bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-blue-400">
 							Drive Growth
 						</span>
 					</div>

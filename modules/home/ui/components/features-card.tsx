@@ -157,9 +157,9 @@ export default function FeaturesCards() {
 		<section className="min-h-screen py-20 px-4 bg-linear-to-br from-gray-50 to-gray-100 dark:from-background dark:to-background">
 			<div className="max-w-7xl mx-auto">
 				<div className="text-center mb-16">
-					<div className="my-4 text-5xl font-bold">
+					<div className="my-4 tracking-tighter uppercase text-5xl font-bold">
 						Building the{" "}
-						<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
+						<span className="bg-clip-text  italic text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
 							Modern Web
 						</span>
 					</div>

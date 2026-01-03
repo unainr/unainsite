@@ -79,9 +79,9 @@ export default function JourneySection() {
 						<Calendar className="w-4 h-4" />
 						Professional Timeline
 					</div>
-					<h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+					<h2 className="text-4xl sm:text-5xl font-bold tracking-tighter uppercase text-zinc-900 dark:text-zinc-50 mb-4">
 						My{" "}
-						<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 via-cyan-500 to-teal-500">
+						<span className="bg-clip-text text-transparent italic bg-linear-to-r from-blue-500 via-cyan-500 to-teal-500">
 							Journey
 						</span>
 					</h2>

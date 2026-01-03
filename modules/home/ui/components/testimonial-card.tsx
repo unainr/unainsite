@@ -74,9 +74,9 @@ const randomRotate = () => `${(Math.floor(Math.random() * 16) - 8)}deg`;
 		<div className="mx-auto px-4 py-20 font-sans antialiased max-w-6xl md:px-12">
 			{/* Heading and Description */}
 			<div className="mb-12 text-center">
-				<div className="my-4 text-5xl font-bold" >
+				<div className="my-4 tracking-tighter uppercase text-5xl font-bold" >
 					Project {" "}
-					<span className="bg-clip-text text-transparent  bg-linear-to-r from-blue-500 to-blue-400">
+					<span className="bg-clip-text text-transparent italic  bg-linear-to-r from-blue-500 to-blue-400">
 						Gallery
 					</span>
 				</div>

@@ -75,9 +75,9 @@ export default function ProcessSection() {
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ duration: 0.5 }}
 					className="text-center mb-16">
-					<h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+					<h2 className="text-4xl tracking-tighter uppercase sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
 						Development{" "}
-						<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
+						<span className="bg-clip-text italic text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
 							Process
 						</span>
 					</h2>
@@ -128,22 +128,8 @@ export default function ProcessSection() {
 					))}
 				</motion.div>
 
-				{/* Additional info */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{ duration: 0.5, delay: 0.3 }}
-					className="mt-16 text-center bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-8 border border-blue-200 dark:border-blue-800">
-					<h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-3">
-						Agile & Transparent
-					</h3>
-					<p className="text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-						I follow agile methodologies with regular updates, clear
-						communication, and iterative development. You'll be involved at
-						every stage, ensuring the final product exceeds your expectations.
-					</p>
-				</motion.div>
+				
+				
 			</div>
 		</section>
 	);

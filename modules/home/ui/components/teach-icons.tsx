@@ -12,9 +12,9 @@ export default  function TechStackIcons() {
               className="space-y-8"
             >
               <div>
-                <div className="my-4 text-5xl font-bold" >
-								Technology Stack{" "}
-								<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-blue-400">
+                <div className="my-4 uppercase tracking-tighter text-5xl font-bold" >
+								Technology {" "}
+								<span className="bg-clip-text italic text-transparent bg-linear-to-r from-blue-500 to-blue-400">
 									Stack
 								</span>
 							</div>

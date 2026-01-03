@@ -113,20 +113,17 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				<NextTopLoader
+					color="#3299fa"
+					height={2}
+					crawlSpeed={50}
+					speed={1000}
+					showSpinner={false}
+				/>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="dark"
 					disableTransitionOnChange>
-					<NextTopLoader
-						color="#3299fa"
-						height={2}
-						crawlSpeed={120}
-						speed={350}
-						easing="ease-in-out"
-						showSpinner={false}
-						shadow="0 0 8px rgba(50,153,250,0.45)"
-					/>
-
 					{children}
 				</ThemeProvider>
 			</body>

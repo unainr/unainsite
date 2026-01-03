@@ -79,9 +79,9 @@ export default function StatsSection() {
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ duration: 0.5 }}
 					className="text-center mb-16">
-					<h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+					<h2 className="text-4xl tracking-tighter uppercase sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
 						Achievements in{" "}
-						<span className="bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
+						<span className="bg-clip-text italic text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
 							Numbers
 						</span>
 					</h2>
