@@ -1,4 +1,4 @@
-import { TechStackAnimatedList } from "@/components/ui/teach-stack-list";
+import { AnimatedListDemo } from "./animated/list";
 
 export default  function TechStackIcons() {
   return (
@@ -42,12 +42,9 @@ export default  function TechStackIcons() {
             </div>
 
             {/* Right Column - Animated Tech Stack List */}
-            <div
-             
-              className="flex justify-center"
-            >
-              <TechStackAnimatedList />
-            </div>
+            
+              <AnimatedListDemo />
+            
           </div>
         </div>
       </div>

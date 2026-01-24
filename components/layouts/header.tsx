@@ -36,7 +36,7 @@ export default function MainHeader() {
 						className={cn(
 							"text-sm font-medium transition-colors ",
 							isActive("/") &&
-								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 						)}>
 						Home
 					</Link>
@@ -46,7 +46,7 @@ export default function MainHeader() {
 						className={cn(
 							"text-sm font-medium transition-colors ",
 							isActive("/about") &&
-								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 						)}>
 						About
 					</Link>
@@ -55,7 +55,7 @@ export default function MainHeader() {
 						className={cn(
 							"text-sm font-medium transition-colors ",
 							isActive("/services") &&
-								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 						)}>
 						Services
 					</Link>
@@ -64,7 +64,7 @@ export default function MainHeader() {
 						className={cn(
 							"text-sm font-medium transition-colors ",
 							isActive("/project") &&
-								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 						)}>
 						Projects
 					</Link>
@@ -73,17 +73,14 @@ export default function MainHeader() {
 						className={cn(
 							"text-sm font-medium transition-colors ",
 							isActive("/contact") &&
-								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+								"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 						)}>
 						Contact
 					</Link>
-					
 				</nav>
 
 				<div className="hidden md:flex items-center gap-2">
-					
-				<ModeToggle/>
-
+					<ModeToggle />
 				</div>
 
 				{/* Mobile Menu Trigger */}
@@ -101,7 +98,7 @@ export default function MainHeader() {
 									className={cn(
 										"text-sm font-medium transition-colors ",
 										isActive("/") &&
-											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 									)}>
 									Home
 								</Link>
@@ -110,7 +107,7 @@ export default function MainHeader() {
 									className={cn(
 										"text-sm font-medium transition-colors ",
 										isActive("/about") &&
-											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 									)}>
 									About
 								</Link>
@@ -119,7 +116,7 @@ export default function MainHeader() {
 									className={cn(
 										"text-sm font-medium transition-colors ",
 										isActive("/project") &&
-											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 									)}>
 									Projects
 								</Link>
@@ -128,12 +125,11 @@ export default function MainHeader() {
 									className={cn(
 										"text-sm font-medium transition-colors ",
 										isActive("/contact") &&
-											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4"
+											"text-blue-400 hover:text-blue-600 transition-all duration-100 ease-in font-semibold underline underline-offset-4",
 									)}>
 									Contact
 								</Link>
-				<ModeToggle/>
-								
+								<ModeToggle />
 							</nav>
 						</SheetContent>
 					</Sheet>
