@@ -7,7 +7,7 @@ const Logo = () => {
       <Image
         src="/fine.png" // or your public path
         alt="UNAIN Logo"
-        width={130}
+        width={120}
         height={50}
         priority
       />
