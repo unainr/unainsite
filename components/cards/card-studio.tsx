@@ -36,6 +36,8 @@ const CardProduct = ({ projects, count, startCount }: Props) => {
 							src={project.images[0]}
 							alt={project.name}
 							fill
+							sizes="(max-width: 768px) 100vw, 33vw"
+							priority
 							className="object-cover"
 						/>
 					</div>

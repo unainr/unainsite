@@ -1,19 +1,15 @@
-import CardProductDemo from "@/components/cards/card-studio";
-import Hero from "../components/hero-section";
 import { ProjectWrapper } from "../components/project-wrapper";
 import TextScrollSlide from "../components/text-scroll-slide";
 import TechStackIcons from "../components/teach-icons";
 import FeaturesCards from "../components/features-card";
-import { TopProject } from "../components/testimonial-card";
 import Features from "../components/features";
 import FolderCode from "../components/folder-code";
+import EtherealBeamsHero from "../components/ethereal-beams-hero";
 
 export const HomeView = () => {
 	return (
 		<>
-			<div className="h-full w-full">
-				<Hero />
-			</div>
+			<EtherealBeamsHero />
 			<div className="my-16">
 				<TextScrollSlide />
 			</div>
@@ -31,12 +27,11 @@ export const HomeView = () => {
 					across different industries and technologies.
 				</p>
 			</div>
-			
-			<ProjectWrapper count={3} startCount={0} />
-			<FolderCode/>
+
+			<ProjectWrapper count={6} startCount={0} />
+			<FolderCode />
 			<FeaturesCards />
 			<TechStackIcons />
-			<TopProject />
 		</>
 	);
 };
