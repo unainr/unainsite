@@ -5,11 +5,12 @@ const Logo = () => {
   return (
     <Link href="/" className="flex items-center gap-2 invert-25 dark:invert-0">
       <Image
+       className="h-auto w-auto"
         src="/fine.png" // or your public path
         alt="UNAIN Logo"
         width={120}
         height={50}
-        priority
+       priority
       />
     </Link>
   );

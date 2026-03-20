@@ -10,3 +10,23 @@ export const PROJECT_FETCH_QUERY =
 }
 
 `);
+
+
+export const CASE_STUDIES_QUERY = defineQuery(`
+  *[_type == "project"] | order(_createdAt desc) {
+    _id,
+    name,
+    tagline,
+    category,
+    year,
+    description,
+    challenge,
+    solution,
+    result,
+    accentColor,
+    stack,
+    projectLink,
+    "slug": slug.current,
+    "image": images[0].asset->url,
+  }
+`);
