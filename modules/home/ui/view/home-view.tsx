@@ -5,6 +5,8 @@ import FeaturesCards from "../components/features-card";
 import Features from "../components/features";
 import FolderCode from "../components/folder-code";
 import EtherealBeamsHero from "../components/ethereal-beams-hero";
+import Testimonials from "../components/testimonials";
+import { Pricing } from "@/modules/pricing/ui/components/pricing";
 
 export const HomeView = () => {
 	return (
@@ -32,6 +34,8 @@ export const HomeView = () => {
 			<FolderCode />
 			<FeaturesCards />
 			<TechStackIcons />
+			<Pricing/>
+			<Testimonials/>
 		</>
 	);
 };

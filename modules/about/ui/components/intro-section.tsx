@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, Code2, Rocket } from "lucide-react";
+import Link from "next/link";
 
 export default function IntroSection() {
 	return (
@@ -51,11 +52,11 @@ export default function IntroSection() {
 								View My Work
 								<Rocket className="w-4 h-4" />
 							</a>
-							<a
-								href="/contact"
-								className="inline-flex items-center gap-2 px-6 py-3 border-2 border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 font-semibold rounded-xl hover:border-blue-500 dark:hover:border-blue-500 transition-all">
-								Get In Touch
-							</a>
+							<Link
+								href="/UNAIN_FullStack_AI_Developer_Resume.pdf"
+								className="inline-flex items-center gap-2 px-6 py-3 border-2 border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 font-semibold rounded-xl hover:border-blue-500 dark:hover:border-blue-500 transition-all" target="_blank">
+								Resume
+							</Link>
 						</div>
 					</motion.div>
 
