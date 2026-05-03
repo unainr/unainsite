@@ -2,250 +2,230 @@
 
 import { motion } from "framer-motion";
 import {
-	Mail,
-	MapPin,
-	Phone,
-	Send,
-	MessageSquare,
-	User,
-	Sparkles,
+  Mail,
+  MapPin,
+  Phone,
+  Calendar,
+  Clock,
+  ArrowUpRight,
+  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
-import { useState } from "react";
 
-export default function ContactForm() {
-	const [formState, setFormState] = useState<"idle" | "submitting" | "success">(
-		"idle"
-	);
+const contactCards = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "unain.dev@outlook.com",
+    href: "mailto:unain.dev@outlook.com",
+    gradient: "from-blue-500 to-blue-600",
+    shadow: "shadow-blue-500/30 hover:shadow-blue-500/50",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+92 308 9469544",
+    href: "tel:+923089469544",
+    gradient: "from-cyan-500 to-cyan-600",
+    shadow: "shadow-cyan-500/30 hover:shadow-cyan-500/50",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Karachi, Pakistan",
+    href: null,
+    gradient: "from-teal-500 to-teal-600",
+    shadow: "shadow-teal-500/30 hover:shadow-teal-500/50",
+  },
+];
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		setFormState("submitting");
-		// Simulate API call
-		setTimeout(() => {
-			setFormState("success");
-			setTimeout(() => setFormState("idle"), 3000);
-		}, 1500);
-	};
+const perks = [
+  "Free 30-minute discovery call",
+  "No commitment required",
+  "Get a project estimate",
+  "Available for remote work worldwide",
+];
 
-	return (
-		<section className="py-20 px-4 bg-white dark:bg-zinc-950 relative overflow-hidden">
-			{/* Enhanced decorative background */}
-			<div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-			<div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-			<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl" />
+export default function ContactSection() {
+  return (
+    <section className="relative overflow-hidden py-24 px-4 bg-white dark:bg-zinc-950">
+      {/* Background glows */}
+      <div className="pointer-events-none absolute top-0 right-0 w-125 h-125 bg-blue-500/8 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-0 w-125 h-125 bg-cyan-500/8 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl" />
 
-			<div className="max-w-6xl mx-auto relative z-10">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{ duration: 0.5 }}
-					className="text-center mb-16">
-					<div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
-						<Sparkles className="w-4 h-4" />
-						Let's Connect
-					</div>
-					<h2 className="text-4xl tracking-tighter uppercase sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-						Get In{" "}
-						<span className="bg-clip-text italic text-transparent bg-linear-to-r from-blue-500 via-cyan-500 to-teal-500">
-							Touch
-						</span>
-					</h2>
-					<p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-						Have a project in mind? Let's discuss how I can help bring your
-						vision to life
-					</p>
-				</motion.div>
+      <div className="relative z-10 max-w-6xl mx-auto">
 
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-					{/* Enhanced Contact Info Cards */}
-					<motion.div
-						initial={{ opacity: 0, x: -20 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5 }}
-						className="space-y-6">
-						{/* Email Card - Vibrant Blue */}
-						<div className="group relative bg-linear-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white overflow-hidden shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300">
-							<div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
-							<div className="absolute inset-0 bg-linear-to-br from-blue-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-							<div className="relative">
-								<div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-									<Mail className="w-7 h-7" />
-								</div>
-								<h3 className="font-bold text-xl mb-2">Email</h3>
-								<a
-									href="mailto:unain.dev@outlook.com"
-									className="text-blue-100 hover:text-white transition-colors text-sm">
-									unain.dev@outlook.com
-								</a>
-							</div>
-						</div>
+        {/* ── Header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
+            Let's Connect
+          </div>
+          <h2 className="text-4xl tracking-tighter uppercase sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+            Get In{" "}
+            <span
+              className="italic"
+              style={{
+                background: "linear-gradient(90deg, #3b82f6, #06b6d4, #14b8a6)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Touch
+            </span>
+          </h2>
+          <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+            Have a project in mind? Let's discuss how I can help bring your
+            vision to life
+          </p>
+        </motion.div>
 
-						{/* Phone Card - Vibrant Cyan */}
-						<div className="group relative bg-linear-to-br from-cyan-500 to-cyan-600 rounded-2xl p-6 text-white overflow-hidden shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300">
-							<div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
-							<div className="absolute inset-0 bg-linear-to-br from-cyan-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-							<div className="relative">
-								<div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-									<Phone className="w-7 h-7" />
-								</div>
-								<h3 className="font-bold text-xl mb-2">Phone</h3>
-								<a
-									href="tel:+923089469544"
-									className="block text-cyan-100 hover:text-white transition-colors text-sm">
-									+92 308 9469544
-								</a>
-							</div>
-						</div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
-						{/* Location Card - Vibrant Teal */}
-						<div className="group relative bg-linear-to-br from-teal-500 to-teal-600 rounded-2xl p-6 text-white overflow-hidden shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 transition-all duration-300">
-							<div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
-							<div className="absolute inset-0 bg-linear-to-br from-teal-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-							<div className="relative">
-								<div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-									<MapPin className="w-7 h-7" />
-								</div>
-								<h3 className="font-bold text-xl mb-2">Location</h3>
-								<p className="text-teal-100 text-sm">Pakistan</p>
-								<p className="text-sm text-teal-200 mt-2">
-									Available for remote work worldwide
-								</p>
-							</div>
-						</div>
-					</motion.div>
+          {/* ── Left: contact info cards ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
+          >
+            {contactCards.map(({ icon: Icon, label, value, href, gradient, shadow }) => (
+              <div
+                key={label}
+                className={`group relative bg-linear-to-br ${gradient} rounded-2xl p-5 text-white overflow-hidden shadow-lg ${shadow} transition-all duration-300`}
+              >
+                <div className="absolute top-0 right-0 w-28 h-28 bg-white/10 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-300" />
+                <div className="relative flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-white/70 text-xs font-medium uppercase tracking-wider mb-0.5">
+                      {label}
+                    </p>
+                    {href ? (
+                      <a
+                        href={href}
+                        className="text-white font-semibold text-sm hover:text-white/80 transition-colors"
+                      >
+                        {value}
+                      </a>
+                    ) : (
+                      <p className="text-white font-semibold text-sm">{value}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
 
-					{/* Enhanced Contact Form */}
-					<motion.div
-						initial={{ opacity: 0, x: 20 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						viewport={{ once: true, margin: "-100px" }}
-						transition={{ duration: 0.5, delay: 0.2 }}
-						className="lg:col-span-2">
-						<div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-8 border-2 border-zinc-200 dark:border-zinc-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300">
-							{formState === "success" ? (
-								<motion.div
-									initial={{ opacity: 0, scale: 0.9 }}
-									animate={{ opacity: 1, scale: 1 }}
-									className="flex flex-col items-center justify-center py-12 text-center">
-									<div className="w-20 h-20 bg-linear-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-500/30">
-										<Send className="w-10 h-10 text-white" />
-									</div>
-									<h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
-										Message Sent!
-									</h3>
-									<p className="text-zinc-600 dark:text-zinc-400">
-										Thank you for reaching out. I'll get back to you within 24
-										hours.
-									</p>
-								</motion.div>
-							) : (
-								<form onSubmit={handleSubmit} className="space-y-6">
-									<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-										{/* Name Input */}
-										<div>
-											<label
-												htmlFor="name"
-												className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-												Your Name
-											</label>
-											<div className="relative group">
-												<div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-blue-500 transition-colors">
-													<User className="w-5 h-5" />
-												</div>
-												<input
-													type="text"
-													id="name"
-													required
-													className="w-full pl-11 pr-4 py-3 bg-white dark:bg-zinc-800 border-2 border-zinc-300 dark:border-zinc-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100"
-													placeholder="John Doe"
-												/>
-											</div>
-										</div>
+            {/* Availability badge */}
+            <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50">
+              <span className="relative flex size-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full size-2.5 bg-emerald-500" />
+              </span>
+              <p className="text-emerald-700 dark:text-emerald-400 text-sm font-medium">
+                Available for new projects
+              </p>
+            </div>
+          </motion.div>
 
-										{/* Email Input */}
-										<div>
-											<label
-												htmlFor="email"
-												className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-												Email Address
-											</label>
-											<div className="relative group">
-												<div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-blue-500 transition-colors">
-													<Mail className="w-5 h-5" />
-												</div>
-												<input
-													type="email"
-													id="email"
-													required
-													className="w-full pl-11 pr-4 py-3 bg-white dark:bg-zinc-800 border-2 border-zinc-300 dark:border-zinc-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100"
-													placeholder="john@example.com"
-												/>
-											</div>
-										</div>
-									</div>
+          {/* ── Right: Book a Call CTA ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="lg:col-span-2"
+          >
+            <div className="relative rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-8 sm:p-10">
 
-									{/* Subject Input */}
-									<div>
-										<label
-											htmlFor="subject"
-											className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-											Subject
-										</label>
-										<input
-											type="text"
-											id="subject"
-											required
-											className="w-full px-4 py-3 bg-white dark:bg-zinc-800 border-2 border-zinc-300 dark:border-zinc-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-zinc-900 dark:text-zinc-100"
-											placeholder="Project Inquiry"
-										/>
-									</div>
+              {/* Inner glow */}
+              <div className="pointer-events-none absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+              <div className="pointer-events-none absolute bottom-0 left-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl" />
 
-									{/* Message Input */}
-									<div>
-										<label
-											htmlFor="message"
-											className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-											Message
-										</label>
-										<div className="relative group">
-											<div className="absolute left-3 top-3 text-zinc-400 group-focus-within:text-blue-500 transition-colors">
-												<MessageSquare className="w-5 h-5" />
-											</div>
-											<textarea
-												id="message"
-												required
-												rows={6}
-												className="w-full pl-11 pr-4 py-3 bg-white dark:bg-zinc-800 border-2 border-zinc-300 dark:border-zinc-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none text-zinc-900 dark:text-zinc-100"
-												placeholder="Tell me about your project..."
-											/>
-										</div>
-									</div>
+              <div className="relative">
+                {/* Top label */}
+                <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+                  <Calendar className="w-3.5 h-3.5" />
+                  Schedule a Meeting
+                </div>
 
-									{/* Submit Button - Consistent Gradient */}
-									<button
-										type="submit"
-										disabled={formState === "submitting"}
-										className="w-full bg-linear-to-r from-blue-500 to-cyan-500 text-white font-semibold py-4 px-8 rounded-xl hover:from-blue-600 hover:to-cyan-600 hover:shadow-lg hover:shadow-blue-500/30 focus:ring-4 focus:ring-blue-500/50 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 group">
-										{formState === "submitting" ? (
-											<>
-												<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-												Sending...
-											</>
-										) : (
-											<>
-												<Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-												Send Message
-											</>
-										)}
-									</button>
-								</form>
-							)}
-						</div>
-					</motion.div>
-				</div>
-			</div>
-		</section>
-	);
+                <h3 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight mb-3">
+                  Book a Free{" "}
+                  <span
+                    style={{
+                      background: "linear-gradient(90deg, #3b82f6, #06b6d4)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    Discovery Call
+                  </span>
+                </h3>
+
+                <p className="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed mb-8 max-w-lg">
+                  Skip the back-and-forth emails. Pick a time that works for you
+                  and let's have a focused 30-minute conversation about your
+                  project, goals, and how I can help.
+                </p>
+
+                {/* Perks */}
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+                  {perks.map((perk) => (
+                    <li key={perk} className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0" />
+                      <span className="text-sm text-zinc-600 dark:text-zinc-400">{perk}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA button */}
+                <a
+                  href="https://cal.com/unain/meeting"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 rounded-2xl px-8 py-4 text-white font-semibold text-base transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25"
+                  style={{
+                    background: "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)",
+                  }}
+                >
+                  <Calendar className="w-5 h-5" />
+                  Book a Call — It's Free
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+
+                {/* Subtext below button */}
+                <div className="mt-5 flex flex-wrap items-center gap-4 text-xs text-zinc-500 dark:text-zinc-500">
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    30 minutes
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    No credit card required
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5" />
+                    Google Meet / Zoom
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
 }
