@@ -21,6 +21,7 @@
     "@react-three/fiber": "^9.5.0",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.22.0",
+    "@sentry/nextjs": "^10.51.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.0",
