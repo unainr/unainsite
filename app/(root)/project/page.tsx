@@ -1,6 +1,6 @@
-import { ProjectWrapper } from "@/modules/home/ui/components/project-wrapper";
 import { ProjectView } from "@/modules/projects/ui/view/project-view";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+
 
 const ProjectPage = async () => {
 	return (
@@ -12,37 +12,82 @@ const ProjectPage = async () => {
 
 export default ProjectPage;
 export const revalidate = 60;
+
 export const metadata: Metadata = {
-	title: "Projects | UNAIN NextJs Developer | Full Stack & AI Portfolio",
-	description:
-		"Projects | Unain | Software Engineer | Web Developer | UI/UX Designer | Full-Stack Developer | AI Expert | Explore 30+ completed projects including AI applications, e-commerce platforms, and modern web solutions built with React, Next.js, and cutting-edge technologies.",
+  metadataBase: new URL("https://unainr.vercel.app"),
+  title: "Projects | Muhammad Unain — Full Stack & AI Developer",
+  description:
+    "Explore projects by Muhammad Unain — a Full Stack & AI developer from Karachi building production-grade web apps, SaaS products, and LLM-powered tools with Next.js, TypeScript, and modern tech stacks.",
 
-	keywords: [
-		"UNAIN Projects",
-		"NextJs Developer Portfolio",
-		"Full Stack Projects",
-		"AI Projects",
-		"React Projects",
-		"Web Development Portfolio",
-		"Software Engineer Projects",
-		"UI/UX Design Projects",
-		"E-commerce Development",
-		"Modern Web Applications",
-	],
+  keywords: [
+    "Muhammad Unain Projects",
+    "Full Stack Developer Portfolio",
+    "Next.js Projects",
+    "AI Projects Pakistan",
+    "React Developer Portfolio",
+    "SaaS Projects",
+    "TypeScript Projects",
+    "Web Development Portfolio Pakistan",
+    "LLM Integration Projects",
+    "Tailwind CSS Projects",
+    "Clerk Auth Projects",
+    "Drizzle ORM",
+    "Neon Database",
+    "Vercel AI SDK",
+  ],
+  authors: [{ name: "Muhammad Unain" }],
+  creator: "Muhammad Unain",
+  publisher: "Muhammad Unain",
 
-	openGraph: {
-		title: "Projects Portfolio | UNAIN NextJs Developer",
-		description:
-			"Explore 30+ completed projects showcasing expertise in AI applications, e-commerce platforms, and modern web development.",
-		url: "https://unainr.vercel.app/projects",
-		images: ["/projects-og.jpg"],
-		type: "website",
-	},
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 
-	twitter: {
-		title: "Projects Portfolio | UNAIN NextJs Developer",
-		description:
-			"Explore 50+ completed projects showcasing expertise in AI applications, e-commerce platforms, and modern web development.",
-		images: ["/projects-og.jpg"],
-	},
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://unainr.vercel.app/projects",
+    title: "Projects | Muhammad Unain — Full Stack & AI Developer",
+    description:
+      "Production-grade web apps, SaaS products, and AI-powered tools built with Next.js, TypeScript, and LLMs. Browse the full project portfolio.",
+    siteName: "Muhammad Unain Portfolio",
+    images: [
+      {
+        url: "/fine.png",
+        width: 1200,
+        height: 630,
+        alt: "Muhammad Unain — Projects Portfolio",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects | Muhammad Unain — Full Stack & AI Developer",
+    description:
+      "Production-grade web apps, SaaS products, and AI-powered tools. Browse the full portfolio.",
+    images: ["/fine.png"],
+    creator: "@unainr",
+  },
+
+  alternates: {
+    canonical: "https://unainr.vercel.app/projects",
+  },
+
+  category: "technology",
+
+  other: {
+    "application-name": "Muhammad Unain Portfolio",
+    "apple-mobile-web-app-title": "Muhammad Unain",
+    "msapplication-TileColor": "#000000",
+    "theme-color": "#000000",
+  },
 };

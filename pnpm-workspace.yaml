@@ -1,0 +1,4 @@
+allowBuilds:
+  '@sentry/cli': true
+  esbuild: true
+  sharp: true

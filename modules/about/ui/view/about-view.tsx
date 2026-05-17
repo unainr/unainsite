@@ -1,14 +1,13 @@
-import React from "react";
-import PageHero from "../components/about-hero";
 import IntroSection from "../components/intro-section";
 import SkillsSection from "../components/skills-section";
 import JourneySection from "../components/journey-section";
 import StatsSection from "../components/stats-section";
+import PageBanner from "@/components/page-banner";
 
 export const AboutView = () => {
 	return (
 		<>
-			<PageHero
+			<PageBanner
 				title="About Me"
 				breadcrumbs={[
 					{ label: "Home", href: "/" },

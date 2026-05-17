@@ -30,3 +30,16 @@ export const CASE_STUDIES_QUERY = defineQuery(`
     "image": images[0].asset->url,
   }
 `);
+
+
+// Templates query
+export const templatesQuery = defineQuery(`
+  *[_type == "templates"] | order(_createdAt desc) {
+    _id,
+    title,
+    description,
+    "image": image.asset->url,
+    liveUrl,
+    buyUrl
+  }
+`);
