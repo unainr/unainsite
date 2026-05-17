@@ -1,12 +1,10 @@
-import React from "react";
-import PageHero from "../components/contact-hero";
 import ContactForm from "../components/contact-form";
-import SocialLinks from "../components/social-links";
+import PageBanner from "@/components/page-banner";
 
 export const ContactView = () => {
 	return (
 		<>
-			<PageHero
+			<PageBanner
 				title="Contact Me"
 				breadcrumbs={[
 					{ label: "Home", href: "/" },

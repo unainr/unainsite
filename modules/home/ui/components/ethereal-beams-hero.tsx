@@ -84,10 +84,23 @@ function extendMaterial<T extends THREE.Material = THREE.Material>(
 }
 
 const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => (
-  <Canvas dpr={[1, 2]} frameloop="always" className="w-full h-full relative">
+  <Canvas 
+    dpr={[1, 1.5]}
+    frameloop="always" 
+    className="w-full h-full relative"
+    onCreated={({ gl }) => {
+      gl.domElement.addEventListener('webglcontextlost', (e) => {
+        e.preventDefault()
+      })
+      gl.domElement.addEventListener('webglcontextrestored', () => {
+        console.log('WebGL context restored')
+      })
+    }}
+  >
     {children}
   </Canvas>
 )
+
 
 const hexToNormalizedRGB = (hex: string): [number, number, number] => {
   const clean = hex.replace("#", "")
@@ -276,6 +289,14 @@ const MergedPlanes = forwardRef<
     [count, width, height],
   )
 
+  // dispose geometry on unmount
+  useEffect(() => {
+    return () => {
+      geometry.dispose()
+      material.dispose()
+    }
+  }, [geometry, material])
+
   useFrame((_, delta) => {
     mesh.current.material.uniforms.time.value += 0.1 * delta
   })
@@ -426,14 +447,15 @@ const Beams: FC<BeamsProps> = ({
  * - Black & white aesthetic
  */
 export default function EtherealBeamsHero() {
+  const beamCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 6 : 10
+
   return (
-    <div className='relative min-h-screen w-full overflow-hidden '>
-      {/* Beams Background */}
+    <div className='relative min-h-screen w-full overflow-hidden'>
       <div className="absolute inset-0 z-0">
         <Beams
           beamWidth={2.5}
           beamHeight={18}
-          beamNumber={15}
+          beamNumber={beamCount}
           lightColor="#ffffff"
           speed={2.5}
           noiseIntensity={2}
@@ -441,14 +463,7 @@ export default function EtherealBeamsHero() {
           rotation={43}
         />
       </div>
-
-     
-
-      {/* Hero Content */}
-     <TextFlip/>
-
-      {/* Gradient Overlay for better text readability */}
-      {/* <div className="absolute inset-0 z-0 bg-linear-to-t from-black/50 via-transparent to-black/30" /> */}
+      <TextFlip/>
     </div>
   )
 }

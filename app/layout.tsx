@@ -73,7 +73,7 @@ export const metadata: Metadata = {
 		siteName: "Muhammad Unain Portfolio",
 		images: [
 			{
-				url: "/6.png",
+				url: "/fine.png",
 				width: 1200,
 				height: 630,
 				alt: "Muhammad Unain - Full Stack Developer Portfolio",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
 		title: "Muhammad Unain | Full Stack Developer & AI Specialist",
 		description:
 			"Full Stack Developer specializing in React, Next.js, Node.js, and AI integration. Building modern web applications and AI solutions.",
-		images: ["/logo1.png"],
+		images: ["/fine.png"],
 		creator: "@unainr",
 	},
 
