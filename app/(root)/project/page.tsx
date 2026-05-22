@@ -11,7 +11,6 @@ const ProjectPage = async () => {
 };
 
 export default ProjectPage;
-export const revalidate = 60;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://unainr.vercel.app"),

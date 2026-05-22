@@ -19,8 +19,6 @@ const TemplatestPage = () => {
 
 export default TemplatestPage
 
-export const revalidate = 60;
-
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://unainr.vercel.app"),
