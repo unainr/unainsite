@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import NextTopLoader from "nextjs-toploader";
+import { ReactQueryProviders } from "@/components/providers/react-query-provider";
+import { Toaster } from "@/components/ui/sonner";
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -124,7 +126,10 @@ export default function RootLayout({
 					attribute="class"
 					defaultTheme="dark"
 					disableTransitionOnChange>
-					{children}
+					<ReactQueryProviders>
+							{children}
+							<Toaster />
+						</ReactQueryProviders>
 				</ThemeProvider>
 			</body>
 		</html>

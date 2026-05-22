@@ -6,5 +6,3 @@ const Home = () => {
 }
 
 export default Home
-
-export const revalidate = 60;
