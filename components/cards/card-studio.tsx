@@ -33,7 +33,7 @@ const CardProduct = ({ projects, count, startCount }: Props) => {
 					{/* Image */}
 					<div className="relative w-full h-60 sm:h-64 lg:h-72">
 						<Image
-							src={project.images[0]}
+							src={project.images[0] ?? "/placeholder.png"}
 							alt={project.name}
 							fill
 							sizes="(max-width: 768px) 100vw, 33vw"
@@ -55,7 +55,7 @@ const CardProduct = ({ projects, count, startCount }: Props) => {
 
 						{/* Push footer to bottom */}
 						<CardFooter className="mt-auto flex justify-start">
-							<Link href={project.projectLink} target="_blank">
+							<Link href={project.projectLink} target="_blank" rel="noopener noreferrer">
 								<Button size="lg">View</Button>
 							</Link>
 						</CardFooter>

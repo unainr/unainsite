@@ -48,7 +48,7 @@ export default async function TemplatesCard({startCount,endCount}: TemplatesCard
               {/* Image */}
               <div className="relative aspect-video overflow-hidden bg-muted">
                 <Image
-                  src={template.image}
+                   src={template.image ?? "/placeholder.png"}
                   alt={template.title}
                   fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -71,6 +71,7 @@ export default async function TemplatesCard({startCount,endCount}: TemplatesCard
                   <Link
                     href={template.liveUrl}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
                     <ExternalLink size={14} />
@@ -82,6 +83,7 @@ export default async function TemplatesCard({startCount,endCount}: TemplatesCard
                   <Link
                     href={template.buyUrl}
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <ShoppingBag size={14} />
                     Buy on Contra
