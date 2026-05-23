@@ -4,6 +4,8 @@ import { ExternalLink, ShoppingBag } from "lucide-react";
 import { templatesQuery } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import TemplatesCardSkeleton from "@/components/skeleton/templates-card-skeleton";
 
 type Template = {
   _id: string;
@@ -19,7 +21,10 @@ interface TemplatesCardProps {
 
 }
 export default async function TemplatesCard({startCount,endCount}: TemplatesCardProps) {
-  const templates = await client.fetch<Template[]>(templatesQuery);
+   const { data: templates = [], isLoading } = useQuery({
+    queryKey: ["templates"],
+    queryFn: () => client.fetch<Template[]>(templatesQuery),
+  });
 
   return (
     <section className="py-24 px-6">
@@ -39,7 +44,11 @@ export default async function TemplatesCard({startCount,endCount}: TemplatesCard
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {
+            isLoading?(
+              <TemplatesCardSkeleton />
+            ):(
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {templates.slice(startCount, endCount).map((template) => (
             <div
               key={template._id}
@@ -94,6 +103,9 @@ export default async function TemplatesCard({startCount,endCount}: TemplatesCard
             </div>
           ))}
         </div>
+            )
+          }
+       
       </div>
     </section>
   );

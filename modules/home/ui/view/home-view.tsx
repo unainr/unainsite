@@ -7,8 +7,6 @@ import FolderCode from "../components/folder-code";
 import EtherealBeamsHero from "../components/ethereal-beams-hero";
 import Testimonials from "../components/testimonials";
 import { Pricing } from "@/modules/pricing/ui/components/pricing";
-import TemplatesCardSkeleton from "@/components/skeleton/templates-card-skeleton";
-import { Suspense } from "react";
 import TemplatesCard from "@/modules/templates/ui/components/templates-card";
 
 export const HomeView = () => {
@@ -38,9 +36,9 @@ export const HomeView = () => {
 			<FeaturesCards />
 			<TechStackIcons />
 			<Pricing />
-			<Suspense fallback={<TemplatesCardSkeleton />}>
+			
 				<TemplatesCard startCount={0} endCount={3} />
-			</Suspense>
+			
 			<Testimonials />
 		</>
 	);
