@@ -85,28 +85,25 @@ export async function updateTemplate(
   }
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const patch = writeClient.patch(id).set({
-      title: data.title,
-      description: data.description,
-      liveUrl: data.liveUrl,
-      buyUrl: data.buyUrl,
-      slug: {
-        _type: "slug",
-        current: data.slug,
-      },
-    });
+    // ✅ fixed
+const patch = writeClient.patch(id).set({
+  title: data.title,
+  description: data.description,
+  liveUrl: data.liveUrl,
+  buyUrl: data.buyUrl,
+  slug: {
+    _type: "slug",
+    current: data.slug,
+  },
+  ...(data.imageAssetId && {
+    image: {
+      _type: "image",
+      asset: { _type: "reference", _ref: data.imageAssetId },
+    },
+  }),
+});
 
-    // Only overwrite image if a new one was uploaded
-    if (data.imageAssetId) {
-      patch.set({
-        image: {
-          _type: "image",
-          asset: { _type: "reference", _ref: data.imageAssetId },
-        },
-      });
-    }
-
-    await patch.commit();
+await patch.commit();
     return { success: true };
   } catch (err) {
     const msg =

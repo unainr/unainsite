@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, ShoppingBag } from "lucide-react";
@@ -20,7 +21,7 @@ interface TemplatesCardProps {
  endCount?: number;
 
 }
-export default async function TemplatesCard({startCount,endCount}: TemplatesCardProps) {
+export default  function TemplatesCard({startCount,endCount}: TemplatesCardProps) {
    const { data: templates = [], isLoading } = useQuery({
     queryKey: ["templates"],
     queryFn: () => client.fetch<Template[]>(templatesQuery),
