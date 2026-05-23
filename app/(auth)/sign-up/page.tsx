@@ -4,12 +4,13 @@ import React from 'react'
 
 const SignUpPage = () => {
   return (
-    <AuthCard
-      title="Create an account"
-      description="Enter your details below to get started"
-    >
-      <SignUpForm />
-    </AuthCard>
+    <></>
+    // <AuthCard
+    //   title="Create an account"
+    //   description="Enter your details below to get started"
+    // >
+    //   <SignUpForm />
+    // </AuthCard>
   )
 }
 

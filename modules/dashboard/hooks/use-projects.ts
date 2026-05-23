@@ -8,6 +8,9 @@ import {
   updateProject,
   deleteProject,
 } from "../server/project.actions";
+import { client } from "@/sanity/lib/client";
+import { Project } from "@/types";
+import { PROJECT_FETCH_QUERY } from "@/sanity/lib/queries";
 
 // ─── Query Keys ───────────────────────────────────────────────────────────────
 
@@ -20,7 +23,7 @@ export const projectKeys = {
 export function useProjects() {
   return useQuery({
     queryKey: projectKeys.all,
-    queryFn: () => getProjects(),
+   queryFn: () => client.fetch<Project[]>(PROJECT_FETCH_QUERY),
   });
 }
 

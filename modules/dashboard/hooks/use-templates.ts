@@ -8,6 +8,9 @@ import {
   updateTemplate,
   deleteTemplate,
 } from "../server/template.actions";
+import { client } from "@/sanity/lib/client";
+import { templatesQuery } from "@/sanity/lib/queries";
+import { Template } from "@/types";
 
 // ─── Query Keys ───────────────────────────────────────────────────────────────
 
@@ -20,7 +23,7 @@ export const templateKeys = {
 export function useTemplates() {
   return useQuery({
     queryKey: templateKeys.all,
-    queryFn: () => getTemplates(),
+      queryFn: () => client.fetch<Template[]>(templatesQuery), // ← fixed
   });
 }
 

@@ -131,7 +131,7 @@ export function SignInForm() {
           )}
         </Button>
 
-        <p className="text-center text-sm text-muted-foreground">
+        {/* <p className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/sign-up"
@@ -139,7 +139,7 @@ export function SignInForm() {
           >
             Sign up
           </Link>
-        </p>
+        </p> */}
       </div>
     </form>
   );
