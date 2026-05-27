@@ -9,7 +9,7 @@ export function Pricing() {
 	const plans = [
 		{
 			name: "Starter",
-			price: "$49",
+			price: "$199",
 			description: "Perfect for small businesses needing an online presence",
 			features: [
 				"Up to 5 pages",
