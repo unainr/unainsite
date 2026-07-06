@@ -4,6 +4,7 @@ import CardProductSkeleton from "@/components/skeleton/projects-skeleton";
 import { client } from "@/sanity/lib/client";
 import { PROJECT_FETCH_QUERY } from "@/sanity/lib/queries";
 import { useQuery } from "@tanstack/react-query";
+import ProjectAnimatedLayout from "./animated/animated-card-list";
 interface Props{
 	count?:number;
 	startCount?:number;
@@ -17,7 +18,13 @@ export const ProjectWrapper =  ({count,startCount}:Props) => {
 	return (
 		<>
 			
-				<CardProduct projects={projects} count={count} startCount={startCount} />
+				 <ProjectAnimatedLayout
+      projects={projects}
+      count={count}
+      startCount={startCount}
+      heading="My Projects"
+      defaultView="card"
+    />
 			
 		</>
 	);
