@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, LayoutGroup, AnimatePresence, type Transition } from "motion/react";
-import { List, LayoutGrid, Layers, ArrowUpRight, FolderGit2, LucideIcon } from "lucide-react";
+import { motion, AnimatePresence, type Transition } from "motion/react";
+import { List, LayoutGrid, Layers, ArrowUpRight, ExternalLink, LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export interface Project {
   _id: string;
@@ -36,25 +37,25 @@ const TABS: { mode: ViewMode; icon: LucideIcon }[] = [
 
 const GRID_CLS: Record<ViewMode, string> = {
   list: "flex flex-col gap-2",
-  card: "grid grid-cols-1 sm:grid-cols-2 gap-3",
+  card: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5",
   pack: "h-48 sm:h-64 flex items-center justify-center mt-4",
 };
 
 const CARD_CLS: Record<ViewMode, string> = {
   list: "flex-row gap-3 sm:gap-4 w-full rounded-lg",
-  card: "flex-col gap-3 w-full items-start rounded-xl",
+  card: "flex-col w-full rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-foreground/20 transition-all duration-300 ease-out",
   pack: "absolute w-36 h-36 sm:w-56 sm:h-56 items-center justify-center rounded-xl",
 };
 
 const IMG_CLS: Record<ViewMode, string> = {
   list: "w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-border",
-  card: "w-full aspect-square rounded-lg border border-border shadow-sm",
-  pack: "w-full h-full rounded-lg border border-border shadow-lg",
+  card: "w-full aspect-[16/10]",
+  pack: "w-full h-full rounded-xl border border-border shadow-lg",
 };
 
 const WRAP_CLS: Record<ViewMode, string> = {
   list: "p-2",
-  card: "p-3",
+  card: "p-3 sm:p-4",
   pack: "py-4",
 };
 
@@ -110,6 +111,35 @@ const ViewTab = React.memo(function ViewTab({
 const ProjectInfo = React.memo(function ProjectInfo({ project, view }: { project: Project; view: ViewMode }) {
   const isCard = view === "card";
 
+  if (isCard) {
+    return (
+      <motion.div
+        layout
+        initial={{ opacity: 0, scale: 0.92, filter: "blur(4px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        exit={{ opacity: 0, scale: 0.92, filter: "blur(4px)" }}
+        transition={FADE}
+        className="flex flex-col gap-1.5 w-full px-4 pt-3.5 pb-4"
+      >
+        <h3 className="font-semibold text-sm sm:text-[15px] leading-tight truncate text-foreground">
+          {project.name}
+        </h3>
+        <p className="line-clamp-2 text-[13px] sm:text-sm text-muted-foreground leading-snug">
+          {project.description}
+        </p>
+        <Link
+          href={project.projectLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/link inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mt-2 w-fit"
+        >
+          <ExternalLink size={14} className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+          Live Demo
+        </Link>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       layout
@@ -117,34 +147,38 @@ const ProjectInfo = React.memo(function ProjectInfo({ project, view }: { project
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       exit={{ opacity: 0, scale: 0.92, filter: "blur(4px)" }}
       transition={FADE}
-      className={cn("flex flex-1 items-center justify-between min-w-0 gap-2", isCard ? "w-full px-1 pb-1" : "px-0")}
+      className="flex flex-1 items-center justify-between min-w-0 gap-2 px-0"
     >
-      <div className="flex flex-col gap-0.5 min-w-0 flex-1">
-        <div className="flex items-center justify-start flex-wrap gap-y-1">
-          <h3 className="font-medium text-sm sm:text-[15px] leading-tight truncate text-foreground max-w-[65%] sm:max-w-none">
+      <div className="flex flex-col gap-1 min-w-0 flex-1">
+        <div className="flex items-center justify-start flex-wrap gap-x-2 gap-y-1">
+          <h3 className="font-semibold tracking-tight text-sm sm:text-[15px] leading-tight truncate text-foreground max-w-[65%] sm:max-w-none">
             {project.name}
           </h3>
-          <span className="flex items-center gap-1 px-1 rounded-sm bg-muted/50 border border-border text-primary text-[10px] font-bold shrink-0 ml-2">
-            <FolderGit2 size={10} className="text-primary/70" />
+          <span className="flex items-center gap-1.5 pl-1.5 pr-2 py-px rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold shrink-0">
+            <span className="relative flex size-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+            </span>
             Live
           </span>
         </div>
-        <span className="line-clamp-2  text-sm text-muted-foreground">
+        <span className="line-clamp-2 text-sm text-muted-foreground/90 leading-snug">
           {project.description}
         </span>
       </div>
 
-      <motion.div whileTap={{ scale: 0.9 }} transition={S_LINK} className="shrink-0">
+      <motion.div whileTap={{ scale: 0.9 }} transition={S_LINK} className="shrink-0 group/link">
         <Link
           href={project.projectLink}
           target="_blank"
           rel="noopener noreferrer"
-          className={cn(
-            "shrink-0 flex items-center justify-center border transition-all duration-200 outline-none rounded-sm bg-card border-border text-foreground/80 hover:border-primary/40 hover:text-primary",
-            isCard ? "size-6" : "size-7 mr-1 sm:mr-2"
-          )}
+          className="shrink-0 flex items-center justify-center border transition-all duration-200 outline-none rounded-full bg-card border-border text-foreground/70 hover:border-transparent hover:text-white hover:bg-linear-to-r hover:from-blue-500 hover:to-cyan-500 hover:shadow-[0_0_0_4px_rgba(59,130,246,0.15)] size-7 mr-1 sm:mr-2"
         >
-          <ArrowUpRight size={isCard ? 14 : 16} strokeWidth={2.5} />
+          <ArrowUpRight
+            size={16}
+            strokeWidth={2.5}
+            className="transition-transform duration-200 group-hover/link:rotate-45"
+          />
         </Link>
       </motion.div>
     </motion.div>
@@ -196,39 +230,49 @@ export function ProjectAnimatedLayout({
 
         <div
           className={cn(
-            "relative w-full flex flex-col items-center border border-border rounded-xl bg-muted/60",
+            "relative w-full flex flex-col items-center rounded-xl",
+            view === "card" ? "bg-transparent border-none" : "border border-border bg-muted/60",
             WRAP_CLS[view]
           )}
         >
-          <LayoutGroup>
-            <motion.div layout transition={S} style={GPU} className={cn("w-full relative", GRID_CLS[view])}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={view}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              style={GPU}
+              className={cn("w-full relative", GRID_CLS[view])}
+            >
               {items.map((project, i) => (
                 <motion.div
                   key={project._id}
-                  layout
+                  layout={view === "pack"}
                   transition={S}
                   style={{ ...GPU, zIndex: view === "pack" ? len - i : 1 }}
                   animate={view === "pack" ? { rotate: 0, x: (i - (len - 1) / 2) * packX } : RESET}
-                  className={cn("relative flex items-center bg-background p-1.5", CARD_CLS[view])}
+                  className={cn(
+                    "relative flex group",
+                    view === "card" ? "flex-col" : "items-center bg-background p-1.5",
+                    CARD_CLS[view]
+                  )}
                 >
-                  <motion.div layout transition={S} className={cn("relative overflow-hidden shrink-0 bg-background", IMG_CLS[view])}>
-                    <motion.img
-                      layout
-                      transition={S}
+                  <div className={cn("relative overflow-hidden shrink-0 bg-muted", IMG_CLS[view])}>
+                    <Image
+                    width={800}
+                    height={800}
                       src={project.images[0] ?? "/placeholder.png"}
                       alt={project.name}
                       loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover block"
+                      className="w-full h-full block object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
                     />
-                  </motion.div>
-                  <AnimatePresence mode="popLayout" initial={false}>
-                    {view !== "pack" && <ProjectInfo key={`${project._id}-info`} project={project} view={view} />}
-                  </AnimatePresence>
+                  </div>
+                  {view !== "pack" && <ProjectInfo key={`${project._id}-info`} project={project} view={view} />}
                 </motion.div>
               ))}
             </motion.div>
-          </LayoutGroup>
+          </AnimatePresence>
         </div>
       </div>
     </div>
