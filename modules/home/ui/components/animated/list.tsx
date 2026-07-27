@@ -1,5 +1,6 @@
 import { AnimatedList } from "./animated-list"
 import Image from "next/image"
+
 interface NotificationData {
   id: number
   name: string
@@ -12,17 +13,15 @@ type NotificationProps = {
   notification: NotificationData
 }
 
-
-
 export function Notification({ notification }: NotificationProps) {
   return (
     <div className="flex w-full max-w-80.5 items-center justify-between gap-4 rounded-2xl border border-neutral-50 bg-white p-3.5 shadow-xl shadow-neutral-200 dark:border-neutral-900 dark:bg-neutral-950 dark:shadow-neutral-950/70">
       <Image
-      width={800}
-      height={800}
+        width={40}
+        height={40}
         src={notification.icon}
         alt={notification.name}
-        className="h-10 w-10"
+        className="h-10 w-10 shrink-0 object-contain"
       />
       <div className="flex w-full flex-col">
         <div className="flex w-full items-start justify-between">
@@ -39,8 +38,8 @@ export function Notification({ notification }: NotificationProps) {
   )
 }
 
-export function AnimatedListDemo() {
- const notifications: NotificationData[] = [
+// hoisted out of the component so it's built once, not on every render
+const notifications: NotificationData[] = [
   {
     id: 1,
     name: "Docker",
@@ -125,11 +124,25 @@ export function AnimatedListDemo() {
     timeAgo: "Fresh",
     icon: "/icons/nextjs.png",
   },
-];
+  {
+  id: 13,
+  name: "TanStack Query",
+  message: "Cache updated, no refetch needed",
+  timeAgo: "Synced",
+  icon: "/icons/tankstackquery.png",
+},
+{
+  id: 14,
+  name: "Hono",
+  message: "Request handled in microseconds",
+  timeAgo: "Fast",
+  icon: "/icons/hono.svg",
+},
+]
 
-
+export function AnimatedListDemo() {
   return (
-    <div className="h-100 w-full  ">
+    <div className="h-100 w-full">
       <AnimatedList
         stackGap={20}
         columnGap={85}

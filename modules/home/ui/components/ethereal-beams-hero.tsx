@@ -3,7 +3,7 @@ import type React from "react"
 
 import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo, type FC, type ReactNode } from "react"
 import * as THREE from "three"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { PerspectiveCamera } from "@react-three/drei"
 import { degToRad } from "three/src/math/MathUtils.js"
 import { ArrowRight, Github, Star } from "lucide-react"
@@ -86,7 +86,7 @@ function extendMaterial<T extends THREE.Material = THREE.Material>(
 const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => (
   <Canvas 
     dpr={[1, 1.5]}
-    frameloop="always" 
+    frameloop="demand"
     className="w-full h-full relative"
     onCreated={({ gl }) => {
       gl.domElement.addEventListener('webglcontextlost', (e) => {
@@ -278,14 +278,17 @@ const MergedPlanes = forwardRef<
     width: number
     count: number
     height: number
+    visibleRef: React.MutableRefObject<boolean>
   }
->(({ material, width, count, height }, ref) => {
+>(({ material, width, count, height, visibleRef }, ref) => {
   const mesh = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!)
+  const { invalidate } = useThree()
 
   useImperativeHandle(ref, () => mesh.current)
 
+  // 100 -> 24 segments per beam: ~4x fewer vertices/faces for the same visual read
   const geometry = useMemo(
-    () => createStackedPlanesBufferGeometry(count, width, height, 0, 100),
+    () => createStackedPlanesBufferGeometry(count, width, height, 0, 24),
     [count, width, height],
   )
 
@@ -298,7 +301,9 @@ const MergedPlanes = forwardRef<
   }, [geometry, material])
 
   useFrame((_, delta) => {
+    if (!visibleRef.current) return // hero scrolled off-screen: skip work entirely
     mesh.current.material.uniforms.time.value += 0.1 * delta
+    invalidate() // ask for exactly one more frame (frameloop="demand")
   })
 
   return <mesh ref={mesh} geometry={geometry} material={material} />
@@ -313,9 +318,17 @@ const PlaneNoise = forwardRef<
     width: number
     count: number
     height: number
+    visibleRef: React.MutableRefObject<boolean>
   }
 >((props, ref) => (
-  <MergedPlanes ref={ref} material={props.material} width={props.width} count={props.count} height={props.height} />
+  <MergedPlanes
+    ref={ref}
+    material={props.material}
+    width={props.width}
+    count={props.count}
+    height={props.height}
+    visibleRef={props.visibleRef}
+  />
 ))
 
 PlaneNoise.displayName = "PlaneNoise"
@@ -343,7 +356,7 @@ const DirLight: FC<{ position: [number, number, number]; color: string }> = ({ p
   return <directionalLight ref={dir} color={color} intensity={1} position={position} />
 }
 
-const Beams: FC<BeamsProps> = ({
+const Beams: FC<BeamsProps & { visibleRef: React.MutableRefObject<boolean> }> = ({
   beamWidth = 2,
   beamHeight = 15,
   beamNumber = 12,
@@ -352,6 +365,7 @@ const Beams: FC<BeamsProps> = ({
   noiseIntensity = 1.75,
   scale = 0.2,
   rotation = 0,
+  visibleRef,
 }) => {
   const meshRef = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!)
 
@@ -417,7 +431,14 @@ const Beams: FC<BeamsProps> = ({
   return (
     <CanvasWrapper>
       <group rotation={[0, 0, degToRad(rotation)]}>
-        <PlaneNoise ref={meshRef} material={beamMaterial} count={beamNumber} width={beamWidth} height={beamHeight} />
+        <PlaneNoise
+          ref={meshRef}
+          material={beamMaterial}
+          count={beamNumber}
+          width={beamWidth}
+          height={beamHeight}
+          visibleRef={visibleRef}
+        />
         <DirLight color={lightColor} position={[0, 3, 10]} />
       </group>
       <ambientLight intensity={1} />
@@ -448,9 +469,26 @@ const Beams: FC<BeamsProps> = ({
  */
 export default function EtherealBeamsHero() {
   const beamCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 6 : 10
+  const containerRef = useRef<HTMLDivElement>(null!)
+  // starts true (hero is what the user sees on load); IntersectionObserver
+  // flips it off once they scroll past it, which stops the shader loop
+  const visibleRef = useRef(true)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visibleRef.current = entry.isIntersecting
+      },
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <div className='relative min-h-screen w-full overflow-hidden'>
+    <div ref={containerRef} className='relative min-h-screen w-full overflow-hidden'>
       <div className="absolute inset-0 z-0">
         <Beams
           beamWidth={2.5}
@@ -461,6 +499,7 @@ export default function EtherealBeamsHero() {
           noiseIntensity={2}
           scale={0.15}
           rotation={43}
+          visibleRef={visibleRef}
         />
       </div>
       <TextFlip/>
