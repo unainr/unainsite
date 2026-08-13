@@ -10,6 +10,7 @@ import {
   FaBluesky,
   FaXTwitter,
 } from 'react-icons/fa6';
+import Logo from './logo';
 
 const navLinks = [
   { name: 'Home',     href: '/' },
@@ -82,18 +83,7 @@ export default function FooterStandard() {
           {/* ── Brand ── */}
           <div className="space-y-5 lg:col-span-2">
 
-            <Link href="/" className="inline-flex items-center">
-              <div className="relative size-10 overflow-hidden rounded-xl ring-1 ring-black/10 dark:ring-white/10">
-                <Image
-                  src="/12.png"
-                  alt="unain logo"
-                  fill
-                  sizes="40px"
-                  className="object-cover"
-                />
-              </div>
-              <span className="text-xl font-semibold">UNAIN</span>
-            </Link>
+           <Logo/>
 
             <p className="text-muted-foreground max-w-xs text-sm leading-relaxed">
               Building thoughtful digital experiences with clean code and sharp design.
