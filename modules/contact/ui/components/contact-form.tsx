@@ -16,8 +16,8 @@ const contactCards = [
   {
     icon: Mail,
     label: "Email",
-    value: "unain.dev@outlook.com",
-    href: "mailto:unain.dev@outlook.com",
+    value: "unainworks@protonmail.com",
+    href: "mailto:unainworks@protonmail.com",
     gradient: "from-blue-500 to-blue-600",
     shadow: "shadow-blue-500/30 hover:shadow-blue-500/50",
   },
