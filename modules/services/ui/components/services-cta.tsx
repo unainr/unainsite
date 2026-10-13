@@ -58,9 +58,9 @@ export default function ServicesCTA() {
 							<div>
 								<div className="text-sm text-blue-100 mb-1">Email</div>
 								<a
-									href="mailto:unain.dev@outlook.com"
+									href="mailto:unainworks@protonmail.com"
 									className="font-semibold hover:text-blue-100 transition-colors">
-									unain.dev@outlook.com
+									unainworks@protonmail.com
 								</a>
 							</div>
 							<div>
