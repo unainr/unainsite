@@ -1,16 +1,16 @@
-import { ProjectWrapper } from "../components/project-wrapper";
-import TechStackIcons from "../components/teach-icons";
-import EtherealBeamsHero from "../components/ethereal-beams-hero";
-import Testimonials from "../components/testimonials";
+import AgentBentoGrid from "@/modules/home/ui/components/agent-bento-grid";
 import { Pricing } from "@/modules/pricing/ui/components/pricing";
 import TemplatesCard from "@/modules/templates/ui/components/templates-card";
-import AgentBentoGrid from "@/modules/home/ui/components/agent-bento-grid";
 import Features from "../components/features";
+import GlassHero from "../components/glassfold";
+import { ProjectWrapper } from "../components/project-wrapper";
+import TechStackIcons from "../components/teach-icons";
+import Testimonials from "../components/testimonials";
 
 export const HomeView = () => {
 	return (
 		<>
-			<EtherealBeamsHero />
+			<GlassHero />
 
 			<Features />
 			<div className="text-center">
