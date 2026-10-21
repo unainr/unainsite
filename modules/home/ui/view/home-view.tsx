@@ -11,7 +11,6 @@ export const HomeView = () => {
 	return (
 		<>
 			<GlassHero />
-
 			<Features />
 			<div className="text-center">
 				<div className="my-4 tracking-tighter uppercase text-5xl font-bold">
