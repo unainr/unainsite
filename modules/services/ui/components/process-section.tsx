@@ -1,135 +1,172 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Search, Pencil, Code2, Rocket, HeadphonesIcon } from "lucide-react";
+import { useRef } from "react";
+import {
+	motion,
+	useInView,
+	useReducedMotion,
+	useScroll,
+	useSpring,
+} from "framer-motion";
+import { Search, Pencil, Code2, Rocket, Headphones } from "lucide-react";
 
 const processSteps = [
 	{
 		number: "01",
 		title: "Discovery",
 		description:
-			"Understanding your vision, goals, and requirements through detailed consultation.",
-		icon: <Search className="w-6 h-6" />,
-		color: "from-blue-500 to-cyan-500",
+			"We talk through your vision, goals, and constraints until the scope is clear to both of us.",
+		deliverable: "Project brief and scope",
+		icon: Search,
 	},
 	{
 		number: "02",
 		title: "Design",
 		description:
-			"Creating wireframes, mockups, and interactive prototypes for your approval.",
-		icon: <Pencil className="w-6 h-6" />,
-		color: "from-purple-500 to-pink-500",
+			"Wireframes, mockups, and an interactive prototype you can click through before any code is written.",
+		deliverable: "Approved prototype",
+		icon: Pencil,
 	},
 	{
 		number: "03",
 		title: "Development",
 		description:
-			"Building your application with clean code, best practices, and modern technologies.",
-		icon: <Code2 className="w-6 h-6" />,
-		color: "from-orange-500 to-red-500",
+			"Clean, tested code built with modern tools. You see working builds along the way, not just at the end.",
+		deliverable: "Weekly working builds",
+		icon: Code2,
 	},
 	{
 		number: "04",
 		title: "Deployment",
 		description:
-			"Launching your project with proper testing, optimization, and quality assurance.",
-		icon: <Rocket className="w-6 h-6" />,
-		color: "from-green-500 to-emerald-500",
+			"Final testing, performance tuning, and a careful launch so release day is uneventful.",
+		deliverable: "Live, tested product",
+		icon: Rocket,
 	},
 	{
 		number: "05",
 		title: "Support",
 		description:
-			"Providing ongoing maintenance, updates, and technical support as needed.",
-		icon: <HeadphonesIcon className="w-6 h-6" />,
-		color: "from-indigo-500 to-blue-500",
+			"Updates, fixes, and technical help after launch, for as long as you need them.",
+		deliverable: "Ongoing maintenance",
+		icon: Headphones,
 	},
 ];
 
-const containerVariants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.1,
-		},
-	},
-};
+function Step({
+	step,
+	isLast,
+	reduceMotion,
+}: {
+	step: (typeof processSteps)[number];
+	isLast: boolean;
+	reduceMotion: boolean | null;
+}) {
+	const ref = useRef<HTMLLIElement>(null);
+	// Becomes true once the step crosses the middle band of the viewport.
+	const reached = useInView(ref, { margin: "-45% 0px -45% 0px", once: false });
+	const Icon = step.icon;
 
-const itemVariants = {
-	hidden: { opacity: 0, y: 20 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: { duration: 0.5 },
-	},
-};
+	return (
+		<li ref={ref} className={`relative pl-16 sm:pl-20 ${isLast ? "" : "pb-14"}`}>
+			{/* Node on the timeline */}
+			<span
+				aria-hidden
+				className={`absolute left-0 top-0 flex size-12 items-center justify-center rounded-full border-2 transition-colors ${
+					reduceMotion ? "" : "duration-300"
+				} ${
+					reached
+						? "border-blue-500 bg-blue-500 text-white"
+						: "border-zinc-300 bg-white text-zinc-400 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-500"
+				}`}>
+				<Icon className="size-5" />
+			</span>
+
+			<div className="flex items-baseline gap-3">
+				<span className="font-mono text-sm tabular-nums text-zinc-400 dark:text-zinc-500">
+					{step.number}
+				</span>
+				<h3
+					className={`text-2xl font-semibold tracking-tight transition-colors ${
+						reduceMotion ? "" : "duration-300"
+					} ${
+						reached
+							? "text-zinc-900 dark:text-zinc-50"
+							: "text-zinc-500 dark:text-zinc-500"
+					}`}>
+					{step.title}
+				</h3>
+			</div>
+
+			<p className="mt-2 max-w-prose text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
+				{step.description}
+			</p>
+
+			<p className="mt-4 inline-flex items-center gap-2 rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-700 dark:border-zinc-800 dark:text-zinc-300">
+				<span className="text-zinc-500 dark:text-zinc-500">You get</span>
+				<span className="font-medium">{step.deliverable}</span>
+			</p>
+		</li>
+	);
+}
 
 export default function ProcessSection() {
+	const reduceMotion = useReducedMotion();
+	const listRef = useRef<HTMLOListElement>(null);
+
+	// The one animated moment: the line fills as you scroll through the steps.
+	const { scrollYProgress } = useScroll({
+		target: listRef,
+		offset: ["start 60%", "end 60%"],
+	});
+	const progress = useSpring(scrollYProgress, {
+		stiffness: 120,
+		damping: 30,
+		mass: 0.3,
+	});
+
 	return (
-		<section className="py-20 px-4 bg-white dark:bg-zinc-950">
-			<div className="max-w-6xl mx-auto">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{ duration: 0.5 }}
-					className="text-center mb-16">
-					<h2 className="text-4xl tracking-tighter uppercase sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-						Development{" "}
-						<span className="bg-clip-text italic text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
-							Process
-						</span>
+		<section className="bg-white px-4 py-24 dark:bg-zinc-950">
+			<div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+				{/* Heading column, stays in view on desktop */}
+				<div className="lg:sticky lg:top-24 lg:self-start">
+					<h2 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
+						From first call to long-term support
 					</h2>
-					<p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-						A streamlined workflow designed to deliver exceptional results
+					<p className="mt-5 max-w-md text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+						Five stages, each with something concrete you can review before we
+						move on.
 					</p>
-				</motion.div>
+				</div>
 
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true, margin: "-100px" }}
-					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-					{processSteps.map((step, index) => (
-						<motion.div
-							key={index}
-							variants={itemVariants}
-							className="relative group">
-							<div className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 h-full flex flex-col">
-								{/* Step number */}
-								<div className="text-6xl font-bold text-zinc-200 dark:text-zinc-800 mb-4">
-									{step.number}
-								</div>
+				{/* Timeline */}
+				<div className="relative">
+					{/* Track */}
+					<div
+						aria-hidden
+						className="absolute bottom-6 left-6 top-6 w-px -translate-x-1/2 bg-zinc-200 dark:bg-zinc-800"
+					/>
+					{/* Progress fill */}
+					<motion.div
+						aria-hidden
+						style={{
+							scaleY: reduceMotion ? 1 : progress,
+							transformOrigin: "top",
+						}}
+						className="absolute bottom-6 left-6 top-6 w-px -translate-x-1/2 bg-blue-500"
+					/>
 
-								{/* Icon */}
-								<div
-									className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-r ${step.color} text-white mb-4`}>
-									{step.icon}
-								</div>
-
-								{/* Title */}
-								<h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-3">
-									{step.title}
-								</h3>
-
-								{/* Description */}
-								<p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-									{step.description}
-								</p>
-
-								{/* Connector line for desktop */}
-								{index < processSteps.length - 1 && (
-									<div className="hidden lg:block absolute top-16 -right-3 w-6 h-0.5 bg-linear-to-r from-zinc-300 to-transparent dark:from-zinc-700" />
-								)}
-							</div>
-						</motion.div>
-					))}
-				</motion.div>
-
-				
-				
+					<ol ref={listRef} className="relative">
+						{processSteps.map((step, index) => (
+							<Step
+								key={step.number}
+								step={step}
+								isLast={index === processSteps.length - 1}
+								reduceMotion={reduceMotion}
+							/>
+						))}
+					</ol>
+				</div>
 			</div>
 		</section>
 	);

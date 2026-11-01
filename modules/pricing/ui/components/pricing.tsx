@@ -8,31 +8,37 @@ import * as React from "react";
 
 const SPRING = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-const PHONE_ITEMS = [
+type PhoneItem = {
+  badge: string;
+  variant: "default" | "popular" | "ai";
+  price: string;
+  title: string;
+  desc: string;
+};
+
+const PHONE_ITEMS: PhoneItem[] = [
   {
-    badge: "Starter",
-    variant: "default" as const,
-    price: "$199",
+    badge: "Launch",
+    variant: "default",
+    price: "$450",
     title: "Online in 5–7 days",
-    desc: "5-page site, contact form & animations",
+    desc: "5-page site, contact form & basic SEO",
   },
   {
-    badge: "Growth",
-    variant: "popular" as const,
-    price: "$299",
+    badge: "Web App",
+    variant: "default",
+    price: "$1,200",
     title: "Full-stack web app",
-    desc: "Auth, database, API integrations, modern UI",
+    desc: "Dashboard, auth, database, API integrations",
   },
   {
-    badge: "AI Plan",
-    variant: "ai" as const,
-    price: "$699",
+    badge: "AI Product",
+    variant: "popular",
+    price: "From $2,500",
     title: "AI-powered SaaS",
-    desc: "LLM integration, chatbot, automation",
+    desc: "LLM features, chatbot, billing, automation",
   },
 ];
-
-type PhoneItem = (typeof PHONE_ITEMS)[0];
 
 function BadgeChip({ variant, label }: { variant: PhoneItem["variant"]; label: string }) {
   const cls =
@@ -185,43 +191,46 @@ function PhoneMockup() {
 
 const plans = [
   {
-    name: "Starter",
-    price: "$199",
-    description: "Perfect for small businesses needing an online presence",
+    name: "Launch",
+    price: "$450",
+    from: false,
+    description: "For small businesses that need a fast, professional online presence",
     features: [
       "Up to 5 pages",
       "Mobile responsive design",
       "Contact form",
-      "Modern animations",
+      "Basic SEO setup",
       "Delivery in 5-7 days",
     ],
     popular: false,
   },
   {
-    name: "Growth",
-    price: "$299",
-    description: "For businesses ready to scale with a full web app",
+    name: "Web App",
+    price: "$1,200",
+    from: false,
+    description: "For businesses ready to launch a full web app",
     features: [
       "Full web app with dashboard",
       "Authentication & database",
       "API integrations",
       "Modern UI with Next.js",
-      "Delivery in 14-21 days",
-    ],
-    popular: true,
-  },
-  {
-    name: "AI Plan",
-    price: "$699",
-    description: "For startups that want AI-powered products",
-    features: [
-      "AI-powered web app or SaaS",
-      "LLM integration & chatbot",
-      "Automation workflows",
-      "Full stack Next.js + AI",
-      "Delivery in 3-4 weeks",
+      "Delivery in 2-3 weeks",
     ],
     popular: false,
+  },
+  {
+    name: "AI Product",
+    price: "$2,500",
+    from: true,
+    description: "For startups building AI-powered products",
+    features: [
+      "AI-powered web app or SaaS",
+      "LLM features & chatbot",
+      "Automation workflows",
+      "Billing & authentication",
+      "Delivery in 3-4 weeks",
+    ],
+    popular: true,
   },
 ];
 
@@ -244,7 +253,8 @@ export function Pricing() {
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-balance text-base text-muted-foreground md:text-lg">
-            No hidden fees. Pick a plan and let's start building together.
+            Fixed prices and a clear scope. Pick a plan and book a call to
+            get started.
           </p>
         </div>
 
@@ -271,7 +281,12 @@ export function Pricing() {
                 {plan.name}
               </p>
 
-              <div className="mb-1 flex items-end gap-1">
+              <div className="mb-1 flex items-end gap-1.5">
+                {plan.from && (
+                  <span className="mb-2 text-sm text-muted-foreground">
+                    From
+                  </span>
+                )}
                 <span className="text-5xl font-bold tracking-tight">
                   {plan.price}
                 </span>
@@ -320,6 +335,13 @@ export function Pricing() {
             </Card>
           ))}
         </div>
+
+        {/* Terms */}
+        <p className="mx-auto mt-10 max-w-2xl text-balance text-center text-sm leading-relaxed text-muted-foreground">
+          Pay 50% to start and 50% on delivery. Two revision rounds are
+          included. Monthly support for fixes and small updates is available
+          from $150.
+        </p>
 
       </div>
     </section>

@@ -1,292 +1,246 @@
 "use client";
 
-import type React from "react";
-import { motion } from "framer-motion";
 import { Warp } from "@paper-design/shaders-react";
-import {
-	Brain,
-	Code,
-	Palette,
-	ShoppingCart,
-	Workflow,
-	Lightbulb,
-} from "lucide-react";
+import { MotionConfig, motion, useReducedMotion } from "framer-motion";
+import { Bot, Brain, Check, Globe, Layers, ShoppingCart } from "lucide-react";
+import type { ReactNode } from "react";
 
 interface Service {
 	title: string;
 	description: string;
-	features: string[];
-	icon: React.ReactNode;
+	deliverables: string[];
+	plan: string;
+	price: string;
+	icon: ReactNode;
+	featured?: boolean;
 }
 
+// Plans and prices match the pricing section. Change them in both places.
 const services: Service[] = [
 	{
-		title: "AI-Powered Web Development",
+		title: "AI products and SaaS",
 		description:
-			"Integrate intelligent features into your web applications with Gemini AI, Vercel AI SDK, and advanced LLMs for chatbots, analyzers, and automation.",
-		features: [
-			"AI Chatbots",
-			"Content Generation",
-			"Smart Automation",
+			"I build AI-powered products from idea to launch: the AI features, the app around them, and the auth and billing that turn it into a real business.",
+		deliverables: [
+			"LLM features and chatbots",
+			"RAG over your own data",
 			"Voice AI",
+			"Auth, billing, and credits",
 		],
-		icon: <Brain className="w-10 h-10 text-white" />,
+		plan: "AI Product plan",
+		price: "From $2,500",
+		icon: <Brain className="size-6" />,
+		featured: true,
 	},
 	{
-		title: "Full-Stack Development",
+		title: "AI agents and automation",
 		description:
-			"End-to-end web application development using React, Next.js, Node.js, and modern databases for scalable, high-performance solutions.",
-		features: [
-			"React & Next.js",
-			"Node.js & Express",
-			"Database Design",
-			"API Development",
+			"Agents that use your tools to get work done, like reading email, creating GitHub issues, or posting to Slack.",
+		deliverables: [
+			"Tool-using agents",
+			"Gmail, Slack, GitHub, and more",
+			"Custom workflows",
 		],
-		icon: <Code className="w-10 h-10 text-white" />,
+		plan: "AI Product plan",
+		price: "From $2,500",
+		icon: <Bot className="size-6" />,
 	},
 	{
-		title: "UI/UX Design & Development",
+		title: "Full-stack web apps",
 		description:
-			"Beautiful, responsive interfaces crafted with Tailwind CSS, Shadcn UI, and Framer Motion for engaging user experiences.",
-		features: [
-			"Responsive Design",
-			"Animation",
-			"Design Systems",
-			"Accessibility",
+			"Dashboards, client portals, and internal tools with auth, a database, and clean APIs, built to be easy to extend.",
+		deliverables: [
+			"Next.js front end",
+			"Typed APIs with Hono",
+			"PostgreSQL database",
+			"Auth and roles",
 		],
-		icon: <Palette className="w-10 h-10 text-white" />,
+		plan: "Web App plan",
+		price: "$1,200",
+		icon: <Layers className="size-6" />,
 	},
 	{
-		title: "E-commerce Solutions",
+		title: "Websites and landing pages",
 		description:
-			"Complete online store development with payment integration, inventory management, and optimized checkout experiences.",
-		features: [
-			"Payment Integration",
-			"Product Management",
-			"Cart Systems",
-			"Analytics",
+			"Fast, polished marketing sites that look right on every screen and turn visitors into leads.",
+		deliverables: [
+			"Up to 5 pages",
+			"Smooth animations",
+			"Contact form",
+			"Basic SEO",
 		],
-		icon: <ShoppingCart className="w-10 h-10 text-white" />,
+		plan: "Launch plan",
+		price: "$450",
+		icon: <Globe className="size-6" />,
 	},
 	{
-		title: "API Development & Integration",
+		title: "E-commerce stores",
 		description:
-			"RESTful APIs, TRPC endpoints, and third-party integrations for seamless data flow and system connectivity.",
-		features: ["REST APIs", "TRPC", "Third-party APIs", "Webhooks"],
-		icon: <Workflow className="w-10 h-10 text-white" />,
-	},
-	{
-		title: "Consulting & Strategy",
-		description:
-			"Technical guidance, architecture planning, and technology stack recommendations for your next big project.",
-		features: [
-			"Tech Stack Selection",
-			"Architecture Design",
-			"Code Review",
-			"Performance Optimization",
+			"Online stores with product management, secure checkout, and an admin dashboard you can run yourself.",
+		deliverables: [
+			"Product and order management",
+			"Payment integration, including COD",
+			"Admin dashboard",
 		],
-		icon: <Lightbulb className="w-10 h-10 text-white" />,
+		plan: "Web App plan",
+		price: "From $1,200",
+		icon: <ShoppingCart className="size-6" />,
 	},
 ];
 
-const getShaderConfig = (index: number) => {
-	const configs: any = [
-		{
-			proportion: 0.3,
-			softness: 0.8,
-			distortion: 0.15,
-			swirl: 0.6,
-			swirlIterations: 8,
-			shape: "checks" as const,
-			shapeScale: 0.08,
-			colors: [
-				"hsl(220, 100%, 30%)",
-				"hsl(240, 100%, 60%)",
-				"hsl(260, 90%, 40%)",
-				"hsl(230, 100%, 70%)",
-			],
-		},
-		{
-			proportion: 0.4,
-			softness: 1.2,
-			distortion: 0.2,
-			swirl: 0.9,
-			swirlIterations: 12,
-			shape: "dots" as const,
-			shapeScale: 0.12,
-			colors: [
-				"hsl(280, 100%, 30%)",
-				"hsl(300, 100%, 65%)",
-				"hsl(320, 90%, 35%)",
-				"hsl(290, 100%, 75%)",
-			],
-		},
-		{
-			proportion: 0.35,
-			softness: 0.9,
-			distortion: 0.18,
-			swirl: 0.7,
-			swirlIterations: 10,
-			shape: "checks" as const,
-			shapeScale: 0.1,
-			colors: [
-				"hsl(340, 100%, 30%)",
-				"hsl(350, 100%, 60%)",
-				"hsl(0, 90%, 35%)",
-				"hsl(345, 100%, 70%)",
-			],
-		},
-		{
-			proportion: 0.45,
-			softness: 1.1,
-			distortion: 0.22,
-			swirl: 0.8,
-			swirlIterations: 15,
-			shape: "dots" as const,
-			shapeScale: 0.09,
-			colors: [
-				"hsl(160, 100%, 25%)",
-				"hsl(180, 100%, 65%)",
-				"hsl(170, 90%, 30%)",
-				"hsl(175, 100%, 75%)",
-			],
-		},
-		{
-			proportion: 0.38,
-			softness: 0.95,
-			distortion: 0.16,
-			swirl: 0.85,
-			swirlIterations: 11,
-			shape: "checks" as const,
-			shapeScale: 0.11,
-			colors: [
-				"hsl(30, 100%, 30%)",
-				"hsl(50, 100%, 65%)",
-				"hsl(40, 90%, 35%)",
-				"hsl(45, 100%, 70%)",
-			],
-		},
-		{
-			proportion: 0.42,
-			softness: 1.0,
-			distortion: 0.19,
-			swirl: 0.75,
-			swirlIterations: 9,
-			shape: "dots" as const,
-			shapeScale: 0.13,
-			colors: [
-				"hsl(120, 100%, 25%)",
-				"hsl(140, 100%, 60%)",
-				"hsl(130, 90%, 30%)",
-				"hsl(135, 100%, 70%)",
-			],
-		},
-	];
-	return configs[index % configs.length];
-};
-
 const containerVariants = {
 	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.1,
-		},
-	},
+	visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
 const itemVariants = {
 	hidden: { opacity: 0, y: 20 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: { duration: 0.5 },
-	},
+	visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+function ServiceCard({ service }: { service: Service }) {
+	const reduceMotion = useReducedMotion();
+	const { featured } = service;
+
+	return (
+		<motion.article
+			variants={itemVariants}
+			className={`relative overflow-hidden rounded-3xl ${
+				featured
+					? "md:col-span-2"
+					: "border border-zinc-200 bg-white transition-colors hover:border-blue-500 dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-blue-500"
+			}`}>
+			{/* The one shader on the page. It sits behind the content and is purely decorative. */}
+			{featured && (
+				<div aria-hidden="true" className="absolute inset-0">
+					<Warp
+						style={{ height: "100%", width: "100%" }}
+						proportion={0.3}
+						softness={0.8}
+						distortion={0.15}
+						swirl={0.6}
+						swirlIterations={8}
+						shape="checks"
+						shapeScale={0.08}
+						scale={1}
+						rotation={0}
+						speed={reduceMotion ? 0 : 0.6}
+						colors={[
+							"hsl(215, 100%, 25%)",
+							"hsl(210, 100%, 50%)",
+							"hsl(190, 100%, 45%)",
+							"hsl(200, 100%, 65%)",
+						]}
+					/>
+					<div className="absolute inset-0 bg-zinc-950/70" />
+				</div>
+			)}
+
+			<div className="relative flex h-full flex-col p-8">
+				<div
+					className={`mb-6 flex size-12 items-center justify-center rounded-xl ${
+						featured
+							? "bg-white/15 text-white"
+							: "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+					}`}>
+					{service.icon}
+				</div>
+
+				<h3
+					className={`text-2xl font-bold ${
+						featured ? "text-white" : "text-zinc-900 dark:text-zinc-50"
+					}`}>
+					{service.title}
+				</h3>
+
+				<p
+					className={`mt-3 max-w-xl leading-relaxed ${
+						featured ? "text-white/85" : "text-zinc-600 dark:text-zinc-400"
+					}`}>
+					{service.description}
+				</p>
+
+				<ul
+					className={`mt-6 grid gap-2 ${featured ? "sm:grid-cols-2" : ""}`}>
+					{service.deliverables.map((item) => (
+						<li
+							key={item}
+							className={`flex items-start gap-2 text-sm ${
+								featured
+									? "text-white/90"
+									: "text-zinc-700 dark:text-zinc-300"
+							}`}>
+							<Check
+								className={`mt-0.5 size-4 shrink-0 ${
+									featured ? "text-cyan-300" : "text-blue-500"
+								}`}
+							/>
+							{item}
+						</li>
+					))}
+				</ul>
+
+				<div
+					className={`mt-auto flex items-baseline justify-between gap-4 border-t pt-4 ${
+						featured
+							? "mt-8 border-white/20"
+							: "mt-8 border-zinc-200 dark:border-zinc-800"
+					}`}>
+					<p
+						className={`text-sm ${
+							featured ? "text-white/80" : "text-zinc-500 dark:text-zinc-400"
+						}`}>
+						{service.plan}
+					</p>
+					<p
+						className={`font-semibold ${
+							featured ? "text-white" : "text-zinc-900 dark:text-zinc-50"
+						}`}>
+						{service.price}
+					</p>
+				</div>
+			</div>
+		</motion.article>
+	);
+}
 
 export default function ServiceCards() {
 	return (
-		<section
-			id="services"
-			className="min-h-screen py-20 px-4 bg-linear-to-br from-gray-50 to-gray-100 dark:from-background dark:to-background">
-			<div className="max-w-7xl mx-auto">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{ duration: 0.5 }}
-					className="text-center mb-16">
-					<h2 className="text-4xl tracking-tighter uppercase sm:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-						Professional{" "}
-						<span className="bg-clip-text italic text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
-							Services
-						</span>
-					</h2>
-					<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-						Comprehensive web development solutions tailored to your business
-						needs
-					</p>
-				</motion.div>
+		<MotionConfig reducedMotion="user">
+			<section
+				id="services"
+				className="bg-zinc-50 px-4 py-24 dark:bg-zinc-900/50">
+				<div className="mx-auto max-w-6xl">
+					<motion.div
+						initial={{ opacity: 0, y: 16 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-100px" }}
+						transition={{ duration: 0.5 }}
+						className="mb-14">
+						<h2 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
+							What I can{" "}
+							<span className="bg-linear-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+								build for you
+							</span>
+						</h2>
+						<p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+							Fixed prices for every service. Pick the one closest to your
+							project and we'll scope the details on a free call.
+						</p>
+					</motion.div>
 
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true, margin: "-100px" }}
-					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{services.map((service, index) => {
-						const shaderConfig = getShaderConfig(index);
-						return (
-							<motion.div
-								key={index}
-								variants={itemVariants}
-								className="relative h-105 group">
-								<div className="absolute inset-0 rounded-3xl overflow-hidden">
-									<Warp
-										style={{ height: "100%", width: "100%" }}
-										proportion={shaderConfig.proportion}
-										softness={shaderConfig.softness}
-										distortion={shaderConfig.distortion}
-										swirl={shaderConfig.swirl}
-										swirlIterations={shaderConfig.swirlIterations}
-										shape={shaderConfig.shape}
-										shapeScale={shaderConfig.shapeScale}
-										scale={1}
-										rotation={0}
-										speed={0.8}
-										colors={shaderConfig.colors}
-									/>
-								</div>
-
-								<div className="relative z-10 p-8 rounded-3xl h-full flex flex-col bg-black/80 border border-white/20 dark:border-white/10 group-hover:bg-black/85 transition-all duration-300">
-									<div className="mb-6 filter drop-shadow-lg">
-										{service.icon}
-									</div>
-
-									<h3 className="text-2xl font-bold mb-4 text-white">
-										{service.title}
-									</h3>
-
-									<p className="leading-relaxed text-gray-100 font-medium mb-6">
-										{service.description}
-									</p>
-
-									<div className="mt-auto space-y-2">
-										{service.features.map((feature, featureIndex) => (
-											<div
-												key={featureIndex}
-												className="flex items-center gap-2 text-sm text-gray-200">
-												<div className="w-1.5 h-1.5 rounded-full bg-white" />
-												{feature}
-											</div>
-										))}
-									</div>
-								</div>
-							</motion.div>
-						);
-					})}
-				</motion.div>
-			</div>
-		</section>
+					<motion.div
+						variants={containerVariants}
+						initial="hidden"
+						whileInView="visible"
+						viewport={{ once: true, margin: "-100px" }}
+						className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+						{services.map((service) => (
+							<ServiceCard key={service.title} service={service} />
+						))}
+					</motion.div>
+				</div>
+			</section>
+		</MotionConfig>
 	);
 }

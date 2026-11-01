@@ -1,80 +1,115 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Mail, MessageSquare, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { MotionConfig, motion } from "framer-motion";
+import { CalendarCheck } from "lucide-react";
+
+const EMAIL = "unainworks@protonmail.com";
+
+const nextSteps = [
+	{
+		title: "Free call",
+		text: "You tell me what you're building and what success looks like.",
+	},
+	{
+		title: "Fixed quote",
+		text: "I send a written scope, price, and timeline. No surprises later.",
+	},
+	{
+		title: "Build and delivery",
+		text: "50% to start, 50% on delivery. Two revision rounds are included.",
+	},
+];
 
 export default function ServicesCTA() {
 	return (
-		<section className="py-20 px-4 bg-linear-to-br from-blue-600 to-cyan-600 dark:from-blue-700 dark:to-cyan-700 relative overflow-hidden">
-			{/* Decorative elements */}
-			<div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
-			<div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+		<MotionConfig reducedMotion="user">
+			<section className="bg-linear-to-br from-blue-600 to-cyan-700 px-4 py-24 dark:from-blue-700 dark:to-cyan-800">
+				<div className="mx-auto max-w-5xl">
+					<div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
+						{/* Left: the ask */}
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5 }}>
+							<h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+								Have an idea? Let's scope it on a free call.
+							</h2>
+							<p className="mt-5 max-w-md text-lg leading-relaxed text-white/90">
+								Tell me what you're building. You'll leave with a clear plan
+								and a fixed price, with no obligation.
+							</p>
 
-			<div className="max-w-4xl mx-auto text-center relative z-10">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: "-100px" }}
-					transition={{ duration: 0.5 }}
-					className="space-y-6">
-					<div className="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-						<Sparkles className="w-4 h-4" />
-						Let's Work Together
-					</div>
-
-					<h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-						Ready to Start Your Project?
-					</h2>
-					<p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-						Let's discuss how I can help bring your vision to life with
-						cutting-edge web development and AI integration.
-					</p>
-
-					<div className="flex flex-wrap gap-4 justify-center mt-8">
-						<Link
-							href="mailto:unain.dev@outlook.com"
-							className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-colors shadow-lg shadow-black/20">
-							<Mail className="w-5 h-5" />
-							Email Me
-							<ArrowRight className="w-4 h-4" />
-						</Link>
-						<Link
-							href="/project"
-							className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white/10 transition-colors">
-							<MessageSquare className="w-5 h-5" />
-							View My Work
-						</Link>
-					</div>
-
-					{/* Contact info */}
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						viewport={{ once: true }}
-						transition={{ duration: 0.5, delay: 0.3 }}
-						className="mt-12 pt-8 border-t border-white/20">
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
-							<div>
-								<div className="text-sm text-blue-100 mb-1">Email</div>
+							<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
 								<a
-									href="mailto:unainworks@protonmail.com"
-									className="font-semibold hover:text-blue-100 transition-colors">
-									unainworks@protonmail.com
+									href="https://cal.com/unain/meeting"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-semibold text-blue-700 shadow-lg shadow-black/20 transition-colors hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+									<CalendarCheck className="size-5" />
+									Book a Free Call
+								</a>
+								<a
+									href={`mailto:${EMAIL}`}
+									className="font-medium text-white underline decoration-white/50 underline-offset-4 transition-colors hover:decoration-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+									Or email me
 								</a>
 							</div>
-							<div>
-								<div className="text-sm text-blue-100 mb-1">Location</div>
-								<div className="font-semibold">Pakistan</div>
-							</div>
-							<div>
-								<div className="text-sm text-blue-100 mb-1">Response Time</div>
-								<div className="font-semibold">Within 24 hours</div>
-							</div>
+						</motion.div>
+
+						{/* Right: what happens next */}
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{ duration: 0.5, delay: 0.15 }}>
+							<h3 className="text-sm font-semibold text-white/80">
+								What happens next
+							</h3>
+							<ol className="mt-5 space-y-6">
+								{nextSteps.map((step, i) => (
+									<li key={step.title} className="flex gap-5">
+										<span
+											aria-hidden="true"
+											className="w-6 shrink-0 text-2xl font-semibold leading-7 tabular-nums text-white/60">
+											{i + 1}
+										</span>
+										<div>
+											<p className="text-lg font-semibold leading-7 text-white">
+												{step.title}
+											</p>
+											<p className="mt-1 leading-relaxed text-white/85">
+												{step.text}
+											</p>
+										</div>
+									</li>
+								))}
+							</ol>
+						</motion.div>
+					</div>
+
+					{/* Contact details */}
+					<dl className="mt-16 grid gap-6 border-t border-white/20 pt-8 sm:grid-cols-3">
+						<div>
+							<dt className="text-sm text-white/80">Email</dt>
+							<dd className="mt-1 font-semibold text-white">
+								<a
+									href={`mailto:${EMAIL}`}
+									className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+									{EMAIL}
+								</a>
+							</dd>
 						</div>
-					</motion.div>
-				</motion.div>
-			</div>
-		</section>
+						
+						<div>
+							<dt className="text-sm text-white/80">Reply time</dt>
+							<dd className="mt-1 font-semibold text-white">
+								Within 24 hours
+							</dd>
+						</div>
+					</dl>
+				</div>
+			</section>
+		</MotionConfig>
 	);
 }
