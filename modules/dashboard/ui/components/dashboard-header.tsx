@@ -1,35 +1,26 @@
 'use client';
 
-import { memo } from 'react';
-import { motion } from 'framer-motion';
+import { ModeToggle } from '@/components/theme/mode-toggle';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList
+} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Separator } from '@/components/ui/separator';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import {
-  Bell,
-  Search,
-  Filter,
-  Download,
-  RefreshCw,
-  MoreHorizontal,
-} from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import { SignOutButton } from '@/modules/auth/ui/components/sign-out-button';
-import { ModeToggle } from '@/components/theme/mode-toggle';
+import {
+  MoreHorizontal
+} from 'lucide-react';
+import { motion } from 'motion/react';
 
 
 

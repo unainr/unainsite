@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionConfig, motion } from "framer-motion";
+import { MotionConfig, motion } from "motion/react";
 import { ArrowUpRight, CalendarCheck, Sparkles } from "lucide-react";
 import Link from "next/link";
 

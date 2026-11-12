@@ -1,7 +1,7 @@
 "use client";
 
 import { Warp } from "@paper-design/shaders-react";
-import { MotionConfig, motion, useReducedMotion } from "framer-motion";
+import { MotionConfig, motion, useReducedMotion } from "motion/react";
 import { Bot, Brain, Check, Globe, Layers, ShoppingCart } from "lucide-react";
 import type { ReactNode } from "react";
 

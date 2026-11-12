@@ -27,7 +27,7 @@ export const HomeView = () => {
 			</div>
 
 			<ProjectWrapper count={6} startCount={0} />
-			<AgentBentoGrid className="my-10" />
+			<AgentBentoGrid className="my-10 " />
 			<TechStackIcons />
 			<Pricing />
 

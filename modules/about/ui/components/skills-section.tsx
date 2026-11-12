@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionConfig, motion } from "framer-motion";
+import { MotionConfig, motion } from "motion/react";
 import { Brain, Code2, Database, Layers, Sparkles } from "lucide-react";
 
 const skillCategories = [

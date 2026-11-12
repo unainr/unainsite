@@ -1,5 +1,4 @@
 "use client";
-import CardProduct from "@/components/cards/card-studio";
 import CardProductSkeleton from "@/components/skeleton/projects-skeleton";
 import { client } from "@/sanity/lib/client";
 import { PROJECT_FETCH_QUERY } from "@/sanity/lib/queries";

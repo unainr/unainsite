@@ -179,6 +179,9 @@ importers:
       '@better-auth-ui/react':
         specifier: ^1.7.26
         version: 1.7.26(07ae3ccac99f3fa9c88368cab63f49b1)
+      '@gsap/react':
+        specifier: ^2.1.2
+        version: 2.1.2(gsap@3.15.1)(react@19.3.1)
       '@hookform/resolvers':
         specifier: ^5.9.1
         version: 5.9.1(@standard-schema/spec@1.1.0)(ajv@8.20.0)(react-hook-form@7.88.0(react@19.3.1))(valibot@1.5.0(typescript@5.9.3))(zod@3.25.76)
@@ -245,9 +248,9 @@ importers:
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@neondatabase/serverless@1.1.0)(@opentelemetry/api@1.9.1)(kysely@0.29.6)
-      framer-motion:
-        specifier: ^12.43.0
-        version: 12.43.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      gsap:
+        specifier: ^3.15.1
+        version: 3.15.1
       lucide-react:
         specifier: ^0.560.0
         version: 0.560.0(react@19.3.1)
@@ -1955,6 +1958,12 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
+  '@gsap/react@2.1.2':
+    resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
+    peerDependencies:
+      gsap: ^3.12.5
+      react: '>=17'
 
   '@hexagon/base64@1.1.28':
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
@@ -6036,6 +6045,9 @@ packages:
     resolution: {integrity: sha512-528pngwXd5fyIjb5BKceTKMF4VeVojVLXeHbbuVN+OVXD6nyNyhpJV1gHzXQH/1LV9yjjJecWdjXLSlNYJufdg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
+  gsap@3.15.1:
+    resolution: {integrity: sha512-63yjWRFWj3QRP1UOuD8kcidCcy3nxb1mMRpwHr/xJRvPfm9GtWOXFAYUiL0ro1fgPq2nY53LR+98pAgy9BumBg==}
+
   gunzip-maybe@1.4.2:
     resolution: {integrity: sha512-4haO1M4mLO91PW57BMsDFf75UmwoRX0GkdD+Faw+Lr+r/OZrOCS0pIBwOL1xCKQqnQzbNFGgK2V2CpBUPeFNTw==}
     hasBin: true
@@ -9909,6 +9921,11 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
 
   '@floating-ui/utils@0.2.12': {}
+
+  '@gsap/react@2.1.2(gsap@3.15.1)(react@19.3.1)':
+    dependencies:
+      gsap: 3.15.1
+      react: 19.3.1
 
   '@hexagon/base64@1.1.28': {}
 
@@ -14127,6 +14144,8 @@ snapshots:
   groq@3.88.1-typegen-experimental.0: {}
 
   groq@4.22.1: {}
+
+  gsap@3.15.1: {}
 
   gunzip-maybe@1.4.2:
     dependencies:

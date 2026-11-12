@@ -7,7 +7,7 @@ import {
 	useReducedMotion,
 	useScroll,
 	useSpring,
-} from "framer-motion";
+} from "motion/react";
 import { Search, Pencil, Code2, Rocket, Headphones } from "lucide-react";
 
 const processSteps = [

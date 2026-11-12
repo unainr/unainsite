@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Rocket, Code, Sparkles, Trophy, Calendar } from "lucide-react";
 
 const journeySteps = [

@@ -28,7 +28,7 @@ export default  function TemplatesCard({startCount,endCount}: TemplatesCardProps
   });
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 px-6">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}

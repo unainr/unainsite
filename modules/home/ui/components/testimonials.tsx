@@ -1,20 +1,23 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { Quote } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* ──────────────────────────────────────────────────────
-   Testimonials — CSS-driven marquee, no external avatar
-   images, no JS-driven per-frame animation for the scroll.
-   Swap in real client photos via the `image` field if you
-   have them; otherwise the initials avatar stays.
-────────────────────────────────────────────────────── */
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+/* Brand colors are written inline as Tailwind arbitrary values,
+   so nothing needs to be added to globals.css:
+   #2B7FFF = color1, #0085FF = color3, #6FA8FF = lighter tint */
 
 interface Testimonial {
   text: string;
   name: string;
   role: string;
-  image?: string; // optional — omit to use initials avatar
+  image?: string; // optional: omit to use the initials avatar
 }
 
 const testimonials: Testimonial[] = [
@@ -65,13 +68,11 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+// Avatars stay inside the brand blue family.
 const AVATAR_GRADIENTS = [
-  "from-blue-500 to-cyan-400",
-  "from-violet-500 to-fuchsia-400",
-  "from-amber-500 to-orange-400",
-  "from-emerald-500 to-teal-400",
-  "from-rose-500 to-pink-400",
-  "from-cyan-500 to-blue-400",
+  "from-[#2B7FFF] to-[#0085FF]",
+  "from-[#6FA8FF] to-[#2B7FFF]",
+  "from-[#0085FF] to-[#2B7FFF]",
 ];
 
 function getInitials(name: string) {
@@ -86,45 +87,56 @@ function getInitials(name: string) {
 function TestimonialCard({ t, index }: { t: Testimonial; index: number }) {
   const gradient = AVATAR_GRADIENTS[index % AVATAR_GRADIENTS.length];
 
+  // pb-6 (not gap) so the two copies repeat at an exact period: seamless loop.
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm">
-      <p className="text-sm leading-relaxed text-foreground/90">&ldquo;{t.text}&rdquo;</p>
-      <div className="flex items-center gap-3 mt-auto">
-        {t.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={t.image}
-            alt={t.name}
-            width={36}
-            height={36}
-            loading="lazy"
-            className="w-9 h-9 rounded-full object-cover shrink-0"
-          />
-        ) : (
-          <div
-            className={cn(
-              "w-9 h-9 rounded-full shrink-0 flex items-center justify-center text-white text-xs font-semibold bg-linear-to-br",
-              gradient
-            )}
-          >
-            {getInitials(t.name)}
+    <div className="pb-6">
+      <figure className="relative flex flex-col gap-4 rounded-2xl border border-[#2B7FFF]/15 bg-linear-to-b from-[#2B7FFF]/6 via-card to-card p-5 shadow-sm transition-colors duration-300 hover:border-[#2B7FFF]/40">
+        <Quote aria-hidden className="size-5 text-[#2B7FFF]/60" />
+
+        <blockquote className="text-sm leading-relaxed text-foreground/90">
+          {t.text}
+        </blockquote>
+
+        <figcaption className="mt-auto flex items-center gap-3">
+          {t.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={t.image}
+              alt={t.name}
+              width={36}
+              height={36}
+              loading="lazy"
+              className="size-9 shrink-0 rounded-full object-cover ring-2 ring-[#2B7FFF]/20"
+            />
+          ) : (
+            <div
+              aria-hidden
+              className={cn(
+                "flex size-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br text-xs font-semibold text-white ring-2 ring-[#2B7FFF]/20",
+                gradient,
+              )}
+            >
+              {getInitials(t.name)}
+            </div>
+          )}
+          <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-semibold text-foreground">
+              {t.name}
+            </span>
+            <span className="truncate text-xs text-muted-foreground">
+              {t.role}
+            </span>
           </div>
-        )}
-        <div className="flex flex-col min-w-0">
-          <span className="text-sm font-semibold text-foreground truncate">{t.name}</span>
-          <span className="text-xs text-muted-foreground truncate">{t.role}</span>
-        </div>
-      </div>
+        </figcaption>
+      </figure>
     </div>
   );
 }
 
 /**
- * Pure-CSS vertical marquee. The column's content is rendered twice back to
- * back and translated by exactly -50% over the animation duration, which is
- * what makes the loop seamless. Animation runs on `transform` only (GPU
- * compositor, no layout/paint per frame) and is driven entirely by CSS —
- * nothing re-renders or ticks in JS while it scrolls.
+ * One scrolling column. The cards are rendered twice; GSAP moves the track by
+ * exactly -50% (one full copy) and repeats, which makes the loop seamless.
+ * The second copy is aria-hidden and removed for reduced-motion users.
  */
 function TestimonialsColumn({
   items,
@@ -138,20 +150,27 @@ function TestimonialsColumn({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col gap-6 overflow-hidden", className)}>
+    <div
+      className={cn(
+        "tm-col flex w-80 max-w-full flex-col overflow-hidden",
+        className,
+      )}
+    >
       <div
-        className="flex flex-col gap-6 shrink-0 animate-testimonial-scroll motion-reduce:animate-none"
-        style={{
-          animationDuration: `${duration}s`,
-          animationDirection: reverse ? "reverse" : "normal",
-        }}
+        className="tm-track flex flex-col will-change-transform"
+        data-duration={duration}
+        data-reverse={String(reverse)}
       >
-        {items.map((t, i) => (
-          <TestimonialCard key={`a-${i}`} t={t} index={i} />
-        ))}
-        {items.map((t, i) => (
-          <TestimonialCard key={`b-${i}`} t={t} index={i} />
-        ))}
+        <div>
+          {items.map((t, i) => (
+            <TestimonialCard key={t.name} t={t} index={i} />
+          ))}
+        </div>
+        <div aria-hidden className="motion-reduce:hidden">
+          {items.map((t, i) => (
+            <TestimonialCard key={`dup-${t.name}`} t={t} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -162,51 +181,144 @@ const secondColumn = testimonials.slice(3, 6);
 const thirdColumn = testimonials.slice(6, 9);
 
 export default function Testimonials() {
-  return (
-    <section className="bg-background my-16 relative">
-      {/* scoped keyframes — only shipped once, used by every column */}
-      <style>{`
-        @keyframes testimonial-scroll {
-          from { transform: translateY(0); }
-          to { transform: translateY(-50%); }
-        }
-        .animate-testimonial-scroll {
-          animation-name: testimonial-scroll;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-        .group:hover .animate-testimonial-scroll {
-          animation-play-state: paused;
-        }
-      `}</style>
+  const root = useRef<HTMLElement>(null);
+  const grid = useRef<HTMLDivElement>(null);
 
-      <div className="container z-10 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
-          className="flex flex-col items-center justify-center max-w-135 mx-auto"
-        >
-          <div className="flex justify-center">
-            <div className="border py-1 px-4 rounded-lg">Testimonials</div>
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      // Everything here is skipped for users who prefer reduced motion.
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        /* 1) Entrance: label, heading words, subtitle, then columns */
+        gsap
+          .timeline({
+            defaults: { ease: "power3.out" },
+            scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+          })
+          .from(".tm-label", { y: 16, opacity: 0, duration: 0.6 })
+          .from(".tm-word", { yPercent: 110, duration: 0.8, stagger: 0.1 }, "-=0.3")
+          .from(".tm-sub", { y: 16, opacity: 0, duration: 0.6 }, "-=0.4")
+          .from(".tm-col", { y: 64, opacity: 0, duration: 0.9, stagger: 0.12 }, "-=0.4");
+
+        /* 2) Marquee: one looping tween per column */
+        const tls = gsap.utils.toArray<HTMLElement>(".tm-track").map((track) => {
+          const duration = Number(track.dataset.duration);
+          const reverse = track.dataset.reverse === "true";
+          return gsap.fromTo(
+            track,
+            { yPercent: reverse ? -50 : 0 },
+            { yPercent: reverse ? 0 : -50, duration, ease: "none", repeat: -1 },
+          );
+        });
+
+        // Final speed = hover factor x scroll-boost factor.
+        const speed = { hover: 1, boost: 1 };
+        const apply = () => tls.forEach((t) => t.timeScale(speed.hover * speed.boost));
+
+        // Only animate while the columns are on screen.
+        const visibility = ScrollTrigger.create({
+          trigger: grid.current,
+          start: "top bottom",
+          end: "bottom top",
+          onToggle: (self) => tls.forEach((t) => t.paused(!self.isActive)),
+        });
+        tls.forEach((t) => t.paused(!visibility.isActive));
+
+        // Scrolling the page speeds the columns up, then they ease back.
+        ScrollTrigger.create({
+          trigger: root.current,
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: (self) => {
+            speed.boost = 1 + Math.min(Math.abs(self.getVelocity()) / 1000, 2.5);
+            apply();
+            gsap.to(speed, {
+              boost: 1,
+              duration: 0.9,
+              ease: "power2.out",
+              overwrite: "auto",
+              onUpdate: apply,
+            });
+          },
+        });
+
+        // Hovering the columns eases them down to a crawl (not a hard stop).
+        const el = grid.current;
+        const enter = () =>
+          gsap.to(speed, {
+            hover: 0.15,
+            duration: 0.6,
+            ease: "power2.out",
+            overwrite: "auto",
+            onUpdate: apply,
+          });
+        const leave = () =>
+          gsap.to(speed, {
+            hover: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            overwrite: "auto",
+            onUpdate: apply,
+          });
+        el?.addEventListener("mouseenter", enter);
+        el?.addEventListener("mouseleave", leave);
+
+        return () => {
+          el?.removeEventListener("mouseenter", enter);
+          el?.removeEventListener("mouseleave", leave);
+        };
+      });
+    },
+    { scope: root },
+  );
+
+  return (
+    <section ref={root} className="relative isolate my-16 overflow-hidden py-8">
+      {/* soft brand glow behind the columns (no section background) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/3 -z-10 size-160 -translate-x-1/2 rounded-full bg-[#2B7FFF]/10 blur-3xl dark:bg-[#2B7FFF]/15"
+      />
+
+      <div className="container mx-auto px-6">
+        <div className="mx-auto flex max-w-135 flex-col items-center justify-center text-center">
+          <div className="tm-label rounded-full border border-[#2B7FFF]/25 bg-[#2B7FFF]/10 px-3.5 py-1 text-xs font-medium text-[#2B7FFF]">
+            Testimonials
           </div>
 
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5">
-            What our{" "}
-            <span className="italic bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-cyan-500">
-              users say
+          <h2 className="mt-5 text-4xl font-bold uppercase tracking-tighter sm:text-5xl">
+            <span className="inline-block overflow-hidden py-1 align-bottom">
+              <span className="tm-word inline-block">What our</span>
+            </span>{" "}
+            <span className="inline-block overflow-hidden py-1 pr-2 align-bottom">
+              <span className="tm-word inline-block bg-linear-to-r from-[#2B7FFF] to-[#0085FF] bg-clip-text pr-1 italic text-transparent">
+                users say
+              </span>
             </span>
           </h2>
-          <p className="text-center mt-5 opacity-75">
+
+          <p className="tm-sub mt-5 text-muted-foreground">
             See what our customers have to say about us.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="group flex justify-center gap-6 mt-10 mask-[linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] max-h-185 overflow-hidden">
+        <div
+          ref={grid}
+          className="mx-auto mt-12 flex max-h-185 justify-center gap-6 overflow-hidden mask-[linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] motion-reduce:max-h-none motion-reduce:overflow-visible motion-reduce:mask-none"
+        >
           <TestimonialsColumn items={firstColumn} duration={26} />
-          <TestimonialsColumn items={secondColumn} duration={32} reverse className="hidden md:flex" />
-          <TestimonialsColumn items={thirdColumn} duration={29} className="hidden lg:flex" />
+          <TestimonialsColumn
+            items={secondColumn}
+            duration={32}
+            reverse
+            className="hidden md:flex"
+          />
+          <TestimonialsColumn
+            items={thirdColumn}
+            duration={29}
+            className="hidden lg:flex"
+          />
         </div>
       </div>
     </section>

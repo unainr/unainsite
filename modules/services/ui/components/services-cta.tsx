@@ -1,7 +1,8 @@
 "use client";
 
-import { MotionConfig, motion } from "framer-motion";
+
 import { CalendarCheck } from "lucide-react";
+import { motion, MotionConfig } from "motion/react";
 
 const EMAIL = "unainworks@protonmail.com";
 
